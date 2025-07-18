@@ -24,6 +24,10 @@
       environment.systemPackages =
         [ pkgs.neovim
           pkgs.yabai
+      pkgs.ngrok
+      pkgs.nodejs
+      pkgs.dotnet-sdk
+      pkgs.python3
       pkgs.skhd
       pkgs.jetbrains-toolbox
       pkgs.sketchybar
@@ -86,8 +90,12 @@
 	 "/Users/ayak/Applications/PyCharm.app"
 	 "${pkgs.alacritty}/Applications/Alacritty.app"
 	 ];
-     NSGlobalDomain.AppleShowAllExtensions = true;
-     NSGlobalDomain.AppleShowAllFiles = true;
+     NSGlobalDomain = {
+     AppleShowAllExtensions = true;
+     AppleShowAllFiles = true;
+     _HIHideMenuBar = true;
+     KeyRepeat = 2;
+     };
      screencapture.location = "~/Pictures/Screenshots";
 
       };
@@ -112,7 +120,11 @@
           mouse_action2 = "resize";
       };
 
-      skhd.enable = true;
+      skhd = {
+          enable = true;
+	  skhdconfig = builtins.readFile ./skhdrc;
+      };
+
       sketchybar = {
               enable = true;
               config = builtins.readFile ./sketchybarrc;
