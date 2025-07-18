@@ -1,0 +1,155 @@
+{
+  description = "Example nix-darwin system flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+        homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+
+  };
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-cask, homebrew-core }:
+  let
+    configuration = { pkgs, config, ... }: {
+      # List packages installed in system profile. To search by name, run:
+      # $ nix-env -qaP | grep wget
+      environment.systemPackages =
+        [ pkgs.neovim
+          pkgs.yabai
+      pkgs.skhd
+      pkgs.jetbrains-toolbox
+      pkgs.sketchybar
+      pkgs.maple-mono.NF
+      pkgs.betterdisplay
+      pkgs.slack
+      pkgs.spotify
+      pkgs.vscode
+      # pkgs.windsurf
+      pkgs.notion-app
+      pkgs.code-cursor
+      pkgs.mkalias
+      pkgs.alacritty
+        ];
+
+      homebrew = {
+      enable = true;
+      masApps = {
+      "Word" = 462054704;
+      "Excel" = 462058435;
+      };
+
+      };
+      system.primaryUser = "ayak";
+    system.activationScripts.applications.text = let
+      env = pkgs.buildEnv {
+        name = "system-applications";
+        paths = config.environment.systemPackages;
+        pathsToLink = "/Applications";
+      };
+    in
+      pkgs.lib.mkForce ''
+      # Set up applications.
+      echo "setting up /Applications..." >&2
+      rm -rf /Applications/Nix\ Apps
+      mkdir -p /Applications/Nix\ Apps
+      find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+      while read -r src; do
+        app_name=$(basename "$src")
+        echo "copying $src" >&2
+        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+      done
+          '';
+      system.defaults = {
+         dock.autohide = true;
+     NSGlobalDomain.AppleShowAllExtensions = true;
+     NSGlobalDomain.AppleShowAllFiles = true;
+     screencapture.location = "~/Pictures/Screenshots";
+      };
+
+      nix.enable = false;
+      nixpkgs.config = { allowUnfree = true; };
+      services = {
+          yabai.enable = true;
+      yabai.config = {
+              focus_follows_mouse = "autoraise";
+          mouse_follows_focus = "on";
+          top_padding = 20;
+          bottom_padding = 20;
+          right_padding = 20;
+          left_padding = 20;
+          window_gap = 20;
+          external_bar = "all:20:0";
+          layout = "bsp";
+          window_placement = "second_child";
+          mouse_modifier = "option";
+          mouse_action1 = "move";
+          mouse_action2 = "resize";
+      };
+
+      skhd.enable = true;
+      sketchybar = {
+              enable = true;
+              config = builtins.readFile ./sketchybarrc;
+          };
+      };
+
+      security.pam.services.sudo_local.touchIdAuth = true;
+
+      # Necessary for using flakes on this system.
+      nix.settings.experimental-features = "nix-command flakes";
+
+      # Enable alternative shell support in nix-darwin.
+      # programs.fish.enable = true;
+
+      # Set Git commit hash for darwin-version.
+      system.configurationRevision = self.rev or self.dirtyRev or null;
+
+      # Used for backwards compatibility, please read the changelog before changing.
+      # $ darwin-rebuild changelog
+      system.stateVersion = 6;
+
+      # The platform the configuration will be used on.
+      nixpkgs.hostPlatform = "aarch64-darwin";
+    };
+  in
+  {
+    # Build darwin flake using:
+    # $ darwin-rebuild build --flake .#Ayas-MacBook-Pro
+    darwinConfigurations."Ayas-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      modules = [ configuration
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            # Install Homebrew under the default prefix
+            enable = true;
+
+            # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
+            enableRosetta = true;
+
+            # User owning the Homebrew prefix
+            user = "ayak";
+
+            # Optional: Declarative tap management
+            taps = {
+              "homebrew/homebrew-core" = homebrew-core;
+              "homebrew/homebrew-cask" = homebrew-cask;
+            };
+
+            # Optional: Enable fully-declarative tap management
+            #
+            # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
+            mutableTaps = false;
+          };
+        }
+      ];
+    };
+  };
+}
