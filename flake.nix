@@ -30,7 +30,7 @@
       pkgs.python3
       pkgs.skhd
       pkgs.jetbrains-toolbox
-      pkgs.sketchybar
+      # pkgs.sketchybar
       pkgs.betterdisplay
       pkgs.slack
       pkgs.spotify
@@ -95,6 +95,7 @@
      AppleShowAllFiles = true;
      _HIHideMenuBar = true;
      KeyRepeat = 2;
+     ApplePressAndHoldEnabled = false;
      };
      screencapture.location = "~/Pictures/Screenshots";
 
@@ -112,7 +113,7 @@
           right_padding = 20;
           left_padding = 20;
           window_gap = 20;
-          external_bar = "all:20:0";
+          # external_bar = "all:20:0";
           layout = "bsp";
           window_placement = "second_child";
           mouse_modifier = "alt";
@@ -125,10 +126,10 @@
 	  skhdConfig = builtins.readFile ./skhdrc;
       };
 
-      sketchybar = {
-              enable = true;
-              config = builtins.readFile ./sketchybarrc;
-          };
+      # sketchybar = {
+      #         enable = true;
+      #         config = builtins.readFile ./sketchybarrc;
+      #     };
       };
 
       security.pam.services.sudo_local.touchIdAuth = true;
