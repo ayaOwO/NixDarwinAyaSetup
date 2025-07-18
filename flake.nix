@@ -122,7 +122,7 @@
 
       skhd = {
           enable = true;
-	  skhdconfig = builtins.readFile ./skhdrc;
+	  skhdConfig = builtins.readFile ./skhdrc;
       };
 
       sketchybar = {
