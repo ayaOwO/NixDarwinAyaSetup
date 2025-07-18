@@ -80,11 +80,11 @@
 	 dock.persistent-apps = [
 	 "/System/Applications/Launchpad.app"
 	 "/System/Cryptexes/App/System/Applications/Safari.app"
+	 "/System/Applications/Mail.app"
+	 "/System/Applications/Calendar.app"
 	 "/Users/ayak/Applications/Rider.app"
 	 "/Users/ayak/Applications/PyCharm.app"
 	 "${pkgs.alacritty}/Applications/Alacritty.app"
-	 "/System/Applications/Calendar.app"
-	 "/System/Applications/Mail.app"
 	 ];
      NSGlobalDomain.AppleShowAllExtensions = true;
      NSGlobalDomain.AppleShowAllFiles = true;
