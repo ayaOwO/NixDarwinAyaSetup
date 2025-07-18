@@ -32,11 +32,12 @@
       pkgs.slack
       pkgs.spotify
       pkgs.vscode
-      # pkgs.windsurf
+      pkgs.windsurf
       pkgs.notion-app
       pkgs.code-cursor
       pkgs.mkalias
       pkgs.alacritty
+      pkgs.zoom
         ];
 
       homebrew = {
@@ -44,11 +45,11 @@
       masApps = {
       "Word" = 462054704;
       "Excel" = 462058435;
+      "Whatsapp-messanger" = 310633997;
       };
       onActivation.cleanup = "zap";
       onActivation.autoUpdate = true;
       onActivation.upgrade = true;
-
       };
       system.primaryUser = "ayak";
     system.activationScripts.applications.text = let
@@ -72,9 +73,19 @@
           '';
       system.defaults = {
          dock.autohide = true;
+	 dock.persistent-apps = [
+	 "/System/Applications/Launchpad.app"
+	 "/System/Cryptexes/App/System/Applications/Safari.app"
+	 "/Users/ayak/Applications/Rider.app"
+	 "/Users/ayak/Applications/PyCharm.app"
+	 "${pkgs.alacritty}/Applications/Alacritty.app"
+	 "/System/Applications/Calendar.app"
+	 "/System/Applications/Mail.app"
+	 ];
      NSGlobalDomain.AppleShowAllExtensions = true;
      NSGlobalDomain.AppleShowAllFiles = true;
      screencapture.location = "~/Pictures/Screenshots";
+
       };
 
       nix.enable = false;
