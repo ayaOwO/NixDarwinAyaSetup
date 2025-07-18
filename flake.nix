@@ -27,7 +27,6 @@
       pkgs.skhd
       pkgs.jetbrains-toolbox
       pkgs.sketchybar
-      pkgs.maple-mono.NF
       pkgs.betterdisplay
       pkgs.slack
       pkgs.spotify
@@ -37,9 +36,14 @@
       pkgs.code-cursor
       pkgs.mkalias
       pkgs.alacritty
-      pkgs.zoom
+      pkgs.zoom-us
         ];
 
+      fonts.packages = [
+      pkgs.maple-mono.NF-unhinted
+
+      ];
+      
       homebrew = {
       enable = true;
       masApps = {
@@ -103,7 +107,7 @@
           external_bar = "all:20:0";
           layout = "bsp";
           window_placement = "second_child";
-          mouse_modifier = "option";
+          mouse_modifier = "alt";
           mouse_action1 = "move";
           mouse_action2 = "resize";
       };
