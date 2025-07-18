@@ -93,7 +93,7 @@
      NSGlobalDomain = {
      AppleShowAllExtensions = true;
      AppleShowAllFiles = true;
-     _HIHideMenuBar = true;
+     # _HIHideMenuBar = true;
      KeyRepeat = 2;
      ApplePressAndHoldEnabled = false;
      };
