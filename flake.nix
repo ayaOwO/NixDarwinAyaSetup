@@ -134,7 +134,7 @@
               ApplePressAndHoldEnabled = false;
             };
             screencapture.location = "~/Pictures/Screenshots";
-            spaces.spans-displays = true; # Requires log out
+            spaces.spans-displays = false; # Must be false for yabai to work properly
 
           };
 
