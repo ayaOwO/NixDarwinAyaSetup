@@ -134,8 +134,6 @@
               ApplePressAndHoldEnabled = false;
             };
             screencapture.location = "~/Pictures/Screenshots";
-            spaces.spans-displays = true; # Requires log out
-
           };
 
           nix.enable = false;
