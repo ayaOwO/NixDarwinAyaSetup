@@ -101,6 +101,7 @@
             menuExtraClock = {
               ShowDate = 0; # 0 = When space allows 1 = Always 2 = Never.
               Show24Hour = true;
+              ShowSeconds = false;
               ShowDayOfWeek = true;
             };
             dock = {
@@ -128,10 +129,12 @@
               AppleShowAllFiles = true;
               AppleICUForce24HourTime = true;
               # _HIHideMenuBar = true;
+              InitialKeyRepeat = 15; # Need to verify
               KeyRepeat = 2;
               ApplePressAndHoldEnabled = false;
             };
             screencapture.location = "~/Pictures/Screenshots";
+            spaces.spans-displays = true; # Requires log out
 
           };
 
