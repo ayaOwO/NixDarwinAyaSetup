@@ -92,6 +92,17 @@
               done
             '';
           system.defaults = {
+            finder = {
+              ShowPathbar = true;
+              ShowStatusBar = true;
+              FXPreferredViewStyle = "clmv"; # List view
+            };
+
+            menuExtraClock = {
+              ShowDate = 0; # 0 = When space allows 1 = Always 2 = Never.
+              Show24Hour = true;
+              ShowDayOfWeek = true;
+            };
             dock = {
               wvous-tl-corner = 2; # Top-left: Mission Control
               wvous-tr-corner = 12; # Top-right: Notification Center
@@ -115,6 +126,7 @@
             NSGlobalDomain = {
               AppleShowAllExtensions = true;
               AppleShowAllFiles = true;
+              AppleICUForce24HourTime = true;
               # _HIHideMenuBar = true;
               KeyRepeat = 2;
               ApplePressAndHoldEnabled = false;
