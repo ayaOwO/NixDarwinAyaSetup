@@ -92,16 +92,26 @@
               done
             '';
           system.defaults = {
-            dock.autohide = true;
-            dock.persistent-apps = [
-              "/System/Applications/Launchpad.app"
-              "/System/Cryptexes/App/System/Applications/Safari.app"
-              "/System/Applications/Mail.app"
-              "/System/Applications/Calendar.app"
-              "/Users/ayak/Applications/Rider.app"
-              "/Users/ayak/Applications/PyCharm.app"
-              "${pkgs.alacritty}/Applications/Alacritty.app"
-            ];
+            dock = {
+              wvous-tl-corner = 2; # Top-left: Mission Control
+              wvous-tr-corner = 12; # Top-right: Notification Center
+              wvous-bl-corner = 11; # Bottom-left: Launchpad
+              wvous-br-corner = 14; # Bottom-right: Quick Note
+
+              autohide = true;
+              persistent-apps = [
+                "/System/Applications/Launchpad.app"
+                "/System/Cryptexes/App/System/Applications/Safari.app"
+                "/System/Applications/Mail.app"
+                "/System/Applications/Calendar.app"
+                "${pkgs.notion-app}/Applications/Notion.app"
+                "${pkgs.slack}/Applications/Slack.app"
+                "${pkgs.alacritty}/Applications/Alacritty.app"
+                "/Users/ayak/Applications/Rider.app"
+                "/Users/ayak/Applications/PyCharm.app"
+                "${pkgs.vscode}/Applications/Visual Studio Code.app"
+              ];
+            };
             NSGlobalDomain = {
               AppleShowAllExtensions = true;
               AppleShowAllFiles = true;
@@ -137,7 +147,7 @@
 
             skhd = {
               enable = true;
-            skhdConfig = builtins.readFile ./skhdrc;
+              skhdConfig = builtins.readFile ./skhdrc;
             };
 
             # sketchybar = {
