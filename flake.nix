@@ -37,7 +37,7 @@
             pkgs.nixfmt-rfc-style
             pkgs.ngrok
             pkgs.nodejs
-            pkgs.dotnet-sdk
+            pkgs.dotnet-sdk_9
             pkgs.python3
             pkgs.skhd
             pkgs.jetbrains-toolbox
@@ -52,6 +52,7 @@
             pkgs.mkalias
             pkgs.alacritty
             pkgs.zoom-us
+            pkgs.pgadmin
           ];
 
           fonts.packages = [
