@@ -154,3 +154,5 @@ alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle sticky(+float), picture-in-picture
 # alt - p : yabai -m window --toggle sticky --toggle pip
+
+cmd + alt - t: open -a Alacritty
