@@ -182,6 +182,17 @@
 
           security.pam.services.sudo_local.touchIdAuth = true;
 
+          # Install Rosetta 2 for x64 compatibility
+          system.activationScripts.rosetta.text = ''
+            echo "Checking for Rosetta 2..." >&2
+            if ! /usr/bin/pgrep -q oahd; then
+              echo "Installing Rosetta 2..." >&2
+              /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+            else
+              echo "Rosetta 2 is already installed." >&2
+            fi
+          '';
+
           # Necessary for using flakes on this system.
           nix.settings.experimental-features = "nix-command flakes";
 
