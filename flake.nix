@@ -52,7 +52,7 @@
             pkgs.mkalias
             pkgs.alacritty
             pkgs.zoom-us
-            pkgs.pgadmin
+            pkgs.dbeaver-bin
           ];
 
           fonts.packages = [
