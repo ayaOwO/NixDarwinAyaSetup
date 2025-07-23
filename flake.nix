@@ -28,6 +28,13 @@
     let
       configuration =
         { pkgs, config, ... }:
+        let
+          # Import nixpkgs for x86_64 to get x64 .NET SDK
+          pkgs-x64 = import nixpkgs {
+            system = "x86_64-darwin";
+            config.allowUnfree = true;
+          };
+        in
         {
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
@@ -37,7 +44,8 @@
             pkgs.nixfmt-rfc-style
             pkgs.ngrok
             pkgs.nodejs
-            pkgs.dotnet-sdk_9
+            pkgs.dotnet-sdk_9  # ARM64 .NET SDK for regular development
+            pkgs-x64.dotnet-sdk_9  # x64 .NET SDK for unit tests
             pkgs.python3
             pkgs.skhd
             pkgs.jetbrains-toolbox
