@@ -44,8 +44,8 @@
             pkgs.nixfmt-rfc-style
             pkgs.ngrok
             pkgs.nodejs
-            pkgs.dotnet-sdk_9  # ARM64 .NET SDK for regular development
-            pkgs-x64.dotnet-sdk_9  # x64 .NET SDK for unit tests
+            pkgs.dotnet-sdk_8 # ARM64 .NET SDK for regular development
+            pkgs-x64.dotnet-sdk_8 # x64 .NET SDK for unit tests
             pkgs.python3
             pkgs.skhd
             pkgs.jetbrains-toolbox
@@ -181,6 +181,28 @@
           };
 
           security.pam.services.sudo_local.touchIdAuth = true;
+          # Replace your dotnetOfficialPaths activation script with this:
+          system.activationScripts.extraActivation.text = ''
+            echo "=== STARTING .NET SYMLINK SETUP ===" >&2
+
+            mkdir -p /usr/local/share/dotnet
+
+            rm -rf /usr/local/share/dotnet/x64 2>/dev/null || true
+            rm -rf /usr/local/share/dotnet/arm64 2>/dev/null || true
+            rm -f /usr/local/share/dotnet/dotnet 2>/dev/null || true
+
+            echo "Creating x64 symlink to: ${pkgs-x64.dotnet-sdk_8}" >&2
+            ln -sfn ${pkgs-x64.dotnet-sdk_8} /usr/local/share/dotnet/x64
+
+            echo "Creating arm64 symlink to: ${pkgs.dotnet-sdk_8}" >&2
+            ln -sfn ${pkgs.dotnet-sdk_8} /usr/local/share/dotnet/arm64
+
+            echo "Creating default dotnet symlink (ARM64)..." >&2
+            ln -sfn ${pkgs.dotnet-sdk_8}/bin/dotnet /usr/local/share/dotnet/dotnet
+
+            echo "=== .NET SYMLINK SETUP COMPLETE ===" >&2
+            ls -la /usr/local/share/dotnet/ >&2
+          '';
 
           # Install Rosetta 2 for x64 compatibility
           system.activationScripts.rosetta.text = ''
