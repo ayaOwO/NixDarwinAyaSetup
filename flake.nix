@@ -70,6 +70,10 @@
 
           homebrew = {
             enable = true;
+            casks = [
+              "notion-calendar"
+            ];
+
             masApps = {
               "Word" = 462054704;
               "Excel" = 462058435;
