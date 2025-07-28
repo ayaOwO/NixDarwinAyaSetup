@@ -51,7 +51,6 @@
             pkgs.jetbrains-toolbox
             # pkgs.sketchybar
             pkgs.betterdisplay
-            pkgs.slack
             pkgs.spotify
             pkgs.vscode
             pkgs.windsurf
@@ -78,6 +77,7 @@
               "Word" = 462054704;
               "Excel" = 462058435;
               "Whatsapp-messanger" = 310633997;
+              "Slack-desktop" = 803453959;
             };
             onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
