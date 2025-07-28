@@ -60,6 +60,7 @@
             pkgs.alacritty
             pkgs.zoom-us
             pkgs.dbeaver-bin
+            pkgs.swiftbar
           ];
 
           fonts.packages = [
