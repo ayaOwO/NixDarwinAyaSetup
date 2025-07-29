@@ -137,6 +137,7 @@
                 "/Applications/Slack.app"
                 "${pkgs.alacritty}/Applications/Alacritty.app"
                 "/Users/ayak/Applications/Rider.app"
+                "${pkgs.code-cursor}/Applications/Cursor.app"
                 "/Users/ayak/Applications/PyCharm.app"
                 "${pkgs.vscode}/Applications/Visual Studio Code.app"
               ];
