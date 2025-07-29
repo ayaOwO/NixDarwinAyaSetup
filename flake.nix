@@ -44,11 +44,9 @@
             pkgs.nixfmt-rfc-style
             pkgs.ngrok
             pkgs.nodejs
-            # pkgs-x64.dotnet-sdk_8 # x64 .NET SDK for unit tests
             pkgs.python3
             pkgs.skhd
             pkgs.jetbrains-toolbox
-            # pkgs.sketchybar
             pkgs.betterdisplay
             pkgs.spotify
             pkgs.vscode
