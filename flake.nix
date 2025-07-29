@@ -68,6 +68,10 @@
 
           homebrew = {
             enable = true;
+            brews = [
+              "angular-cli"
+            ];
+
             casks = [
               "notion-calendar"
               "dotnet-sdk@8"
