@@ -55,7 +55,6 @@
             pkgs.code-cursor
             pkgs.mkalias
             pkgs.alacritty
-            pkgs.zoom-us
             pkgs.dbeaver-bin
             pkgs.logseq
             pkgs.swiftbar
@@ -71,10 +70,11 @@
             brews = [
               "angular-cli"
             ];
-
+            
             casks = [
               "notion-calendar"
               "dotnet-sdk@8"
+              "zoom"
             ];
 
             masApps = {
