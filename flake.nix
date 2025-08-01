@@ -48,7 +48,6 @@
             pkgs.skhd
             pkgs.jetbrains-toolbox
             pkgs.betterdisplay
-            pkgs.spotify
             pkgs.vscode
             pkgs.windsurf
             pkgs.notion-app
@@ -73,8 +72,10 @@
             
             casks = [
               "notion-calendar"
+              "google-chrome"
               "dotnet-sdk@8"
               "zoom"
+              "spotify"
             ];
 
             masApps = {
