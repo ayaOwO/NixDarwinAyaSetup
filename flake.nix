@@ -71,6 +71,8 @@
             ];
             
             casks = [
+              "postman"
+              "cursor-cli"
               "notion-calendar"
               "google-chrome"
               "dotnet-sdk@8"
