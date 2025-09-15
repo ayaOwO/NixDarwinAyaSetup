@@ -55,7 +55,6 @@
             pkgs.mkalias
             pkgs.alacritty
             pkgs.dbeaver-bin
-            pkgs.logseq
             pkgs.swiftbar
           ];
 
