@@ -125,12 +125,10 @@
             dock = {
               wvous-tl-corner = 2; # Top-left: Mission Control
               wvous-tr-corner = 12; # Top-right: Notification Center
-              wvous-bl-corner = 11; # Bottom-left: Launchpad
-              wvous-br-corner = 14; # Bottom-right: Quick Note
 
               autohide = true;
               persistent-apps = [
-                "/System/Applications/Launchpad.app"
+                "System/Applications/Apps.app"
                 "/System/Cryptexes/App/System/Applications/Safari.app"
                 "/System/Applications/Mail.app"
                 "/Applications/Notion Calendar.app"
