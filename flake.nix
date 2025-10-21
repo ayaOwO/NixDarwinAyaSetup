@@ -69,6 +69,7 @@
             ];
             
             casks = [
+              "asana"
               "postman"
               "cursor-cli"
               "notion-calendar"
