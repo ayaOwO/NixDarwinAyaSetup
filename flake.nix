@@ -53,7 +53,6 @@
             pkgs.notion-app
             pkgs.code-cursor
             pkgs.mkalias
-            pkgs.alacritty
             pkgs.dbeaver-bin
           ];
 
@@ -136,13 +135,9 @@
                 "/Applications/Notion Calendar.app"
                 "/Applications/Obsidian.app"
                 "/Applications/Asana.app"
-                "${pkgs.notion-app}/Applications/Notion.app"
                 "/Applications/Slack.app"
-                "${pkgs.alacritty}/Applications/Alacritty.app"
                 "/Users/ayak/Applications/Rider.app"
                 "${pkgs.code-cursor}/Applications/Cursor.app"
-                "/Users/ayak/Applications/PyCharm.app"
-                "${pkgs.vscode}/Applications/Visual Studio Code.app"
                 "/Applications/Spotify.app"
                 "/System/Applications/Utilities/Terminal.app"
               ];
