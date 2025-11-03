@@ -131,8 +131,11 @@
               persistent-apps = [
                 "System/Applications/Apps.app"
                 "/System/Cryptexes/App/System/Applications/Safari.app"
+                "/Applications/Google Chrome.app"
                 "/System/Applications/Mail.app"
                 "/Applications/Notion Calendar.app"
+                "/Applications/Obsidian.app"
+                "/Applications/Asana.app"
                 "${pkgs.notion-app}/Applications/Notion.app"
                 "/Applications/Slack.app"
                 "${pkgs.alacritty}/Applications/Alacritty.app"
@@ -140,6 +143,8 @@
                 "${pkgs.code-cursor}/Applications/Cursor.app"
                 "/Users/ayak/Applications/PyCharm.app"
                 "${pkgs.vscode}/Applications/Visual Studio Code.app"
+                "/Applications/Spotify.app"
+                "/System/Applications/Utilities/Terminal.app"
               ];
             };
             NSGlobalDomain = {
