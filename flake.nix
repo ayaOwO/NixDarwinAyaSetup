@@ -55,7 +55,6 @@
 
           fonts.packages = [
             pkgs.maple-mono.NF-unhinted
-
           ];
 
           homebrew = {
