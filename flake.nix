@@ -48,10 +48,7 @@
             pkgs.skhd
             pkgs.jetbrains-toolbox
             pkgs.betterdisplay
-            pkgs.vscode
-            pkgs.windsurf
             pkgs.notion-app
-            pkgs.code-cursor
             pkgs.mkalias
             pkgs.dbeaver-bin
           ];
@@ -70,6 +67,7 @@
             casks = [
               "asana"
               "postman"
+              "cursor"
               "cursor-cli"
               "notion-calendar"
               "google-chrome"
@@ -137,7 +135,7 @@
                 "/Applications/Asana.app"
                 "/Applications/Slack.app"
                 "/Users/ayak/Applications/Rider.app"
-                "${pkgs.code-cursor}/Applications/Cursor.app"
+                "/Applications/Cursor.app"
                 "/Applications/Spotify.app"
                 "/System/Applications/Utilities/Terminal.app"
               ];
