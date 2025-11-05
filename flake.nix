@@ -48,9 +48,7 @@
             pkgs.skhd
             pkgs.jetbrains-toolbox
             pkgs.betterdisplay
-            pkgs.notion-app
             pkgs.mkalias
-            pkgs.dbeaver-bin
           ];
 
           fonts.packages = [
@@ -69,10 +67,12 @@
               "cursor"
               "cursor-cli"
               "notion-calendar"
+              "notion"
               "google-chrome"
               "dotnet-sdk@8"
               "zoom"
               "spotify"
+              "pgadmin4"
             ];
 
             masApps = {
