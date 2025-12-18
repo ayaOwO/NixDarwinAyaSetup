@@ -14,7 +14,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-
   };
   outputs =
     inputs@{
@@ -40,12 +39,10 @@
           # $ nix-env -qaP | grep wget
           environment.systemPackages = [
             pkgs.neovim
-            pkgs.yabai
             pkgs.nixfmt-rfc-style
             pkgs.ngrok
             pkgs.nodejs
             pkgs.python3
-            pkgs.skhd
             pkgs.jetbrains-toolbox
             pkgs.betterdisplay
             pkgs.mkalias
@@ -59,6 +56,8 @@
             enable = true;
             brews = [
               "angular-cli"
+              "koekeishiya/formulae/yabai"
+              "koekeishiya/formulae/skhd"
             ];
             
             casks = [
@@ -243,7 +242,8 @@
               # Optional: Enable fully-declarative tap management
               #
               # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
-              mutableTaps = false;
+              # Set to true to allow external taps like koekeishiya/formulae
+              mutableTaps = true;
             };
           }
         ];
