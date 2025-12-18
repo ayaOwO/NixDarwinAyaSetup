@@ -48,9 +48,6 @@
             pkgs.mkalias
           ];
 
-          fonts.packages = [
-            pkgs.maple-mono.NF-unhinted
-          ];
 
           homebrew = {
             enable = true;
@@ -72,6 +69,7 @@
               "zoom"
               "spotify"
               "pgadmin4"
+              "font-maple-mono-nf"
             ];
 
             masApps = {

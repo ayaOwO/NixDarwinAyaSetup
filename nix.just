@@ -1,23 +1,23 @@
 #!/usr/bin/env just --justfile
 
 # Nix-darwin management tasks
+nix_justfile := "/private/etc/nix-darwin/nix.just"
 
 # Show available tasks
-default:
-    @just --list
+list:
+    @just --justfile {{nix_justfile}} --list
 
 # Apply the nix-darwin configuration
 switch:
-    bash switch.sh
+    @bash switch.sh
 
 # Clean up old generations and run garbage collection
 clean:
-    bash clean.sh
+    @bash clean.sh
 
 # Update flake inputs and apply configuration
 upgrade:
-    bash upgrade.sh
+    @bash upgrade.sh
 
-# Apply configuration and clean up (common workflow)
+# Apply configuration and clean up
 rebuild: switch clean
-    @echo "✅ Rebuild complete!"
