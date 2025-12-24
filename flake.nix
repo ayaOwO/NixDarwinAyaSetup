@@ -38,25 +38,27 @@
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
           environment.systemPackages = [
-            pkgs.neovim
             pkgs.nixfmt-rfc-style
-            pkgs.ngrok
-            pkgs.nodejs
             pkgs.python3
-            pkgs.jetbrains-toolbox
-            pkgs.betterdisplay
             pkgs.mkalias
           ];
 
 
           homebrew = {
             enable = true;
+            taps = [
+              "koekeishiya/formulae"
+            ];
             brews = [
               "angular-cli"
+              "just"
               "koekeishiya/formulae/yabai"
               "koekeishiya/formulae/skhd"
+              "neovim"
+              "node"
+              "python@3.12"
+              "mas"
             ];
-            
             casks = [
               "asana"
               "postman"
@@ -70,17 +72,26 @@
               "spotify"
               "pgadmin4"
               "font-maple-mono-nf"
+              "font-opendyslexic"
+              "logitech-options"
+              "ngrok"
+              "obs"
+              "powershell"
+              "vlc"
+              "jetbrains-toolbox"
+              "betterdisplay"
             ];
-
             masApps = {
               "Word" = 462054704;
               "Excel" = 462058435;
               "Whatsapp-messanger" = 310633997;
               "Slack-desktop" = 803453959;
             };
-            onActivation.cleanup = "zap";
+            onActivation.cleanup = "none";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
+            global.brewfile = true;
+            global.lockfiles = false;
           };
           system.primaryUser = "ayak";
           system.activationScripts.applications.text =
