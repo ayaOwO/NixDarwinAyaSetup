@@ -67,6 +67,7 @@
               "notion-calendar"
               "notion"
               "google-chrome"
+              "jordanbaird-ice@beta"
               "dotnet-sdk@8"
               "zoom"
               "spotify"
