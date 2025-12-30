@@ -70,6 +70,7 @@
               "dotnet-sdk@8"
               "zoom"
               "spotify"
+              "spotmenu"
               "pgadmin4"
               "font-maple-mono-nf"
               "font-opendyslexic"
