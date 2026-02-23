@@ -47,19 +47,18 @@
           homebrew = {
             enable = true;
             taps = [
-              "koekeishiya/formulae"
+              "nikitabobko/tap"
             ];
             brews = [
               "angular-cli"
               "just"
-              "koekeishiya/formulae/yabai"
-              "koekeishiya/formulae/skhd"
               "neovim"
               "node"
               "python@3.12"
               "mas"
             ];
             casks = [
+              "aerospace"
               "asana"
               "postman"
               "cursor"
@@ -116,6 +115,18 @@
                 ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
               done
             '';
+          system.activationScripts.aerospaceConfig.text = ''
+            # Set up Aerospace configuration file
+            echo "setting up Aerospace config..." >&2
+            USER_HOME=$(dscl . -read /Users/${config.system.primaryUser} NFSHomeDirectory | awk '{print $2}')
+            mkdir -p "$USER_HOME/.config/aerospace"
+            if [ -f "$USER_HOME/.aerospace.toml" ] && [ ! -L "$USER_HOME/.aerospace.toml" ]; then
+              echo "backing up existing ~/.aerospace.toml..." >&2
+              mv "$USER_HOME/.aerospace.toml" "$USER_HOME/.aerospace.toml.backup"
+            fi
+            ln -sfn ${./aerospace.toml} "$USER_HOME/.aerospace.toml"
+            ln -sfn ${./aerospace.toml} "$USER_HOME/.config/aerospace/aerospace.toml"
+          '';
           system.defaults = {
             finder = {
               ShowPathbar = true;
@@ -159,7 +170,7 @@
               ApplePressAndHoldEnabled = false;
             };
             screencapture.location = "~/Pictures/Screenshots";
-            spaces.spans-displays = false; # Must be false for yabai to work properly
+            spaces.spans-displays = false; # Must be false for tiling window managers to work properly
 
           };
 
@@ -168,27 +179,6 @@
             allowUnfree = true;
           };
           services = {
-            yabai.enable = true;
-            yabai.config = {
-              focus_follows_mouse = "autoraise";
-              mouse_follows_focus = "on";
-              top_padding = 20;
-              bottom_padding = 20;
-              right_padding = 20;
-              left_padding = 20;
-              window_gap = 20;
-              # external_bar = "all:20:0";
-              layout = "bsp";
-              window_placement = "second_child";
-              mouse_modifier = "alt";
-              mouse_action1 = "move";
-              mouse_action2 = "resize";
-            };
-
-            skhd = {
-              enable = true;
-              skhdConfig = builtins.readFile ./skhdrc;
-            };
 
             # sketchybar = {
             #         enable = true;

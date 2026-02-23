@@ -1,17 +1,16 @@
 # Homebrew taps
-tap "koekeishiya/formulae"
+tap "nikitabobko/tap"
 
 # Homebrew packages
 brew "angular-cli"
 brew "just"
-brew "koekeishiya/formulae/yabai"
-brew "koekeishiya/formulae/skhd"
 brew "neovim"
 brew "node"
 brew "python@3.12"
 brew "mas"  # Mac App Store CLI
 
 # Homebrew casks
+cask "aerospace"
 cask "asana"
 cask "postman"
 cask "cursor"
