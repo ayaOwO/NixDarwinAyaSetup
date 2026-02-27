@@ -7,15 +7,6 @@
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
   };
 
   outputs =
@@ -23,9 +14,6 @@
       self,
       nix-darwin,
       nixpkgs,
-      nix-homebrew,
-      homebrew-cask,
-      homebrew-core,
     }:
     let
       configuration =
@@ -45,98 +33,7 @@
             pkgs.python3
           ];
 
-          homebrew = {
-            enable = true;
-            taps = [
-              "nikitabobko/tap"
-              "FelixKratz/formulae"
-              "theboredteam/boring-notch"
-            ];
-            brews = [
-              "angular-cli"
-              "just"
-              "neovim"
-              "node"
-              "python@3.12"
-              "mas"
-              "uv"
-              "FelixKratz/formulae/sketchybar"
-            ];
-            casks = [
-              "aerospace"
-              "asana"
-              "postman"
-              "cursor"
-              "cursor-cli"
-              "notion-calendar"
-              "notion"
-              "google-chrome"
-              "jordanbaird-ice@beta"
-              "dotnet-sdk@8"
-              "zoom"
-              "spotify"
-              "spotmenu"
-              "pgadmin4"
-              "font-maple-mono-nf"
-              "font-opendyslexic"
-              "logitech-options"
-              "ngrok"
-              "obs"
-              "powershell"
-              "vlc"
-              "jetbrains-toolbox"
-              "betterdisplay"
-              "claude"
-              "boring-notch"
-            ];
-            masApps = {
-              "Word" = 462054704;
-              "Excel" = 462058435;
-              "Whatsapp-messanger" = 310633997;
-              "Slack-desktop" = 803453959;
-            };
-            onActivation.cleanup = "zap";
-            onActivation.autoUpdate = true;
-            onActivation.upgrade = true;
-            global.lockfiles = false;
-          };
-
           system.primaryUser = "ayak";
-
-          launchd.user.agents.sketchybar = {
-            serviceConfig = {
-              Label = "com.felixkratz.sketchybar";
-              ProgramArguments = [ "/opt/homebrew/bin/sketchybar" ];
-              EnvironmentVariables.PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
-              RunAtLoad = true;
-              KeepAlive = true;
-              StandardOutPath = "/tmp/sketchybar.log";
-              StandardErrorPath = "/tmp/sketchybar.err";
-            };
-          };
-
-          system.activationScripts.setupUserConfig.text = ''
-            USER_HOME="/Users/${config.system.primaryUser}"
-            echo "setting up user configs..." >&2
-            mkdir -p "$USER_HOME/.config/aerospace"
-            mkdir -p "$USER_HOME/.config/sketchybar/plugins"
-            ln -sfn /private/etc/nix-darwin/aerospace.toml "$USER_HOME/.config/aerospace/aerospace.toml"
-            ln -sfn /private/etc/nix-darwin/sketchybar/sketchybarrc "$USER_HOME/.config/sketchybar/sketchybarrc"
-            ln -sfn /private/etc/nix-darwin/sketchybar/plugins "$USER_HOME/.config/sketchybar/plugins"
-            ln -sfn /private/etc/nix-darwin/sketchybar/themes "$USER_HOME/.config/sketchybar/themes"
-            echo "setting up wallpaper..." >&2
-            osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/private/etc/nix-darwin/wallpaper.jpg\""
-          '';
-
-          system.activationScripts.rosetta.text = ''
-            echo "Checking for Rosetta 2..." >&2
-            if ! /usr/bin/pgrep -q oahd; then
-              echo "Installing Rosetta 2..." >&2
-              /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-            else
-              echo "Rosetta 2 is already installed." >&2
-            fi
-          '';
 
           system.defaults = {
             finder = {
@@ -199,34 +96,7 @@
     in
     {
       darwinConfigurations."Ayas-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-        modules = [
-          configuration
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              # Install Homebrew under the default prefix
-              enable = true;
-
-              # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
-              # enableRosetta = true;
-
-              # User owning the Homebrew prefix
-              user = "ayak";
-
-              # Optional: Declarative tap management
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-              };
-
-              # Optional: Enable fully-declarative tap management
-              #
-              # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
-              # Set to true to allow external taps like koekeishiya/formulae
-              mutableTaps = true;
-            };
-          }
-        ];
+        modules = [ configuration ];
       };
     };
 }

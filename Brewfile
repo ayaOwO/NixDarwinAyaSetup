@@ -1,0 +1,43 @@
+tap "nikitabobko/tap"
+tap "FelixKratz/formulae"
+tap "theboredteam/boring-notch"
+
+brew "angular-cli"
+brew "just"
+brew "neovim"
+brew "node"
+brew "python"
+brew "mas"
+brew "uv"
+brew "FelixKratz/formulae/sketchybar"
+
+cask "nikitabobko/tap/aerospace"
+cask "asana"
+cask "postman"
+cask "cursor"
+cask "cursor-cli"
+cask "notion-calendar"
+cask "notion"
+cask "google-chrome"
+cask "jordanbaird-ice@beta"
+cask "dotnet-sdk@8"
+cask "zoom"
+cask "spotify"
+cask "spotmenu"
+cask "pgadmin4"
+cask "font-maple-mono-nf"
+cask "font-opendyslexic"
+cask "logitech-options"
+cask "ngrok"
+cask "obs"
+cask "powershell"
+cask "vlc"
+cask "jetbrains-toolbox"
+cask "betterdisplay"
+cask "claude"
+cask "theboredteam/boring-notch/boring-notch"
+
+mas "Word", id: 462054704
+mas "Excel", id: 462058435
+mas "WhatsApp", id: 310633997
+mas "Slack", id: 803453959

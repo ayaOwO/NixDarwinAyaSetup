@@ -15,9 +15,7 @@ switch:
 clean:
     @bash clean.sh
 
-# Update flake inputs and apply configuration
+# Run install script and update flake inputs + apply configuration
 upgrade:
+    @bash install.sh
     @bash upgrade.sh
-
-# Apply configuration and clean up
-rebuild: switch clean
