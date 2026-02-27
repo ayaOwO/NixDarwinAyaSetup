@@ -47,7 +47,9 @@
           homebrew = {
             enable = true;
             taps = [
+              "homebrew/cask"
               "nikitabobko/tap"
+              "theboredteam/boring-notch"
             ];
             brews = [
               "angular-cli"
