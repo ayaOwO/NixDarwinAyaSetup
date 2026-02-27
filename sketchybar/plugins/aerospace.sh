@@ -11,8 +11,8 @@ source "$THEME_DIR/helpers.sh"
 AEROSPACE=/opt/homebrew/bin/aerospace
 
 WS="$1"
-# Use FOCUSED_WORKSPACE from AeroSpace's exec-on-workspace-change trigger when set
-FOCUSED="${FOCUSED_WORKSPACE:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '[:space:]')}"
+# FOCUSED/PREV from exec-on-workspace-change (see https://nikitabobko.github.io/AeroSpace/guide#callbacks)
+FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '[:space:]')}"
 
 if [ "$WS" = "$FOCUSED" ]; then
   # Focused: blue pill, dark label

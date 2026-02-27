@@ -36,10 +36,10 @@ default-root-container-orientation = 'auto'
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
-# Fires on every workspace change (keybind, click, or any other trigger).
-# $AEROSPACE_FOCUSED_WORKSPACE is set by AeroSpace automatically.
+# Notify Sketchybar about workspace change (see guide#callbacks, goodies#7).
+# Process receives: AEROSPACE_FOCUSED_WORKSPACE, AEROSPACE_PREV_WORKSPACE
 exec-on-workspace-change = ['/bin/bash', '-c',
-    '/run/current-system/sw/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+    'sketchybar --trigger aerospace_workspace_change FOCUSED=$AEROSPACE_FOCUSED_WORKSPACE PREV=$AEROSPACE_PREV_WORKSPACE'
 ]
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
