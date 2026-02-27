@@ -127,14 +127,11 @@
               done
             '';
 
-          # Runs after homebrew; symlinks configs and sets wallpaper.
+          # Runs after homebrew; symlinks configs.
           system.activationScripts.setupUserConfig.text = ''
             echo "setting up Aerospace config..." >&2
             mkdir -p "$USER_HOME/.config/aerospace"
             ln -sfn /private/etc/nix-darwin/aerospace.toml "$USER_HOME/.config/aerospace/aerospace.toml"
-
-            echo "setting up wallpaper..." >&2
-            osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${./wallpaper.jpg}\""
           '';
 
           system.activationScripts.rosetta.text = ''
