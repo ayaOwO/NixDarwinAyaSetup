@@ -93,10 +93,9 @@
               "Whatsapp-messanger" = 310633997;
               "Slack-desktop" = 803453959;
             };
-            onActivation.cleanup = "none";
+            onActivation.cleanup = "zap";
             onActivation.autoUpdate = true;
             onActivation.upgrade = true;
-            global.brewfile = true;
             global.lockfiles = false;
           };
           system.primaryUser = "ayak";
