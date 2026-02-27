@@ -45,20 +45,20 @@ automatically-unhide-macos-hidden-apps = false
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["Work", "work++", "work#", "schedule", "browser", "6", "7", "8", "chat", "A"]
+persistent-workspaces = ["1-Work", "2-work++", "3-work#", "4-schedule", "5-browser", "6", "7", "8", "9-chat", "A"]
 
 # Assign workspaces to monitors (1-indexed). See:
 # https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [workspace-to-monitor-force-assignment]
-Work = 2
-"work++" = 2
-"work#" = 2
-schedule = 2
-browser = 1
+"1-Work" = 2
+"2-work++" = 2
+"3-work#" = 2
+"4-schedule" = 2
+"5-browser" = 1
 6 = 2
 7 = 2
 8 = 2
-chat = 1
+"9-chat" = 1
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -140,16 +140,16 @@ on-mode-changed = []
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = ['workspace Work',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=Work']
-    alt-2 = ['workspace work++',   'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=work++']
-    alt-3 = ['workspace work#',    'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=work#']
-    alt-4 = ['workspace schedule', 'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=schedule']
-    alt-5 = ['workspace browser',  'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=browser']
-    alt-6 = ['workspace 6',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=6']
-    alt-7 = ['workspace 7',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=7']
-    alt-8 = ['workspace 8',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=8']
-    alt-9 = ['workspace chat',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=chat']
-    alt-a = ['workspace A',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=A']
+    alt-1 = ['workspace 1-Work',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=1-Work']
+    alt-2 = ['workspace 2-work++',   'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=2-work++']
+    alt-3 = ['workspace 3-work#',    'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=3-work#']
+    alt-4 = ['workspace 4-schedule', 'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=4-schedule']
+    alt-5 = ['workspace 5-browser',  'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=5-browser']
+    alt-6 = ['workspace 6',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=6']
+    alt-7 = ['workspace 7',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=7']
+    alt-8 = ['workspace 8',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=8']
+    alt-9 = ['workspace 9-chat',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=9-chat']
+    alt-a = ['workspace A',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=A']
     alt-b = 'workspace B'
     alt-c = 'workspace C'
     alt-d = 'workspace D'
@@ -173,15 +173,15 @@ on-mode-changed = []
     alt-z = 'workspace Z'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace Work'
-    alt-shift-2 = 'move-node-to-workspace work++'
-    alt-shift-3 = 'move-node-to-workspace work#'
-    alt-shift-4 = 'move-node-to-workspace schedule'
-    alt-shift-5 = 'move-node-to-workspace browser'
+    alt-shift-1 = 'move-node-to-workspace 1-Work'
+    alt-shift-2 = 'move-node-to-workspace 2-work++'
+    alt-shift-3 = 'move-node-to-workspace 3-work#'
+    alt-shift-4 = 'move-node-to-workspace 4-schedule'
+    alt-shift-5 = 'move-node-to-workspace 5-browser'
     alt-shift-6 = 'move-node-to-workspace 6'
     alt-shift-7 = 'move-node-to-workspace 7'
     alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace chat'
+    alt-shift-9 = 'move-node-to-workspace 9-chat'
     alt-shift-a = 'move-node-to-workspace A'
     alt-shift-b = 'move-node-to-workspace B'
     alt-shift-c = 'move-node-to-workspace C'
@@ -232,49 +232,49 @@ on-mode-changed = []
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
 [[on-window-detected]]
 if.app-name-regex-substring = 'terminal|alacritty|iterm'
-run = 'move-node-to-workspace work#'
+run = 'move-node-to-workspace 3-work#'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'cursor'
-run = 'move-node-to-workspace Work'
+run = 'move-node-to-workspace 1-Work'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'rider'
-run = 'move-node-to-workspace work++'
+run = 'move-node-to-workspace 2-work++'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'safari'
-run = 'move-node-to-workspace browser'
+run = 'move-node-to-workspace 5-browser'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'chrome'
-run = 'move-node-to-workspace browser'
+run = 'move-node-to-workspace 5-browser'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'obsidian'
-run = 'move-node-to-workspace schedule'
+run = 'move-node-to-workspace 4-schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'mail'
 if.app-id = 'com.apple.mail'
-run = 'move-node-to-workspace schedule'
+run = 'move-node-to-workspace 4-schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'calendar'
-run = 'move-node-to-workspace schedule'
+run = 'move-node-to-workspace 4-schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = '^notion$'
-run = 'move-node-to-workspace schedule'
+run = 'move-node-to-workspace 4-schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'notion calendar'
-run = 'move-node-to-workspace schedule'
+run = 'move-node-to-workspace 4-schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'zoom'
-run = 'move-node-to-workspace chat'
+run = 'move-node-to-workspace 9-chat'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'whatsapp'
-run = 'move-node-to-workspace chat'
+run = 'move-node-to-workspace 9-chat'

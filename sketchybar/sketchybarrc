@@ -27,7 +27,7 @@ sketchybar --default \
 ##### Left: AeroSpace Workspaces #####
 sketchybar --add event aerospace_workspace_change
 
-WORKSPACES=("Work" "work++" "work#" "schedule" "browser" "6" "7" "8" "chat" "A")
+WORKSPACES=("1-Work" "2-work++" "3-work#" "4-schedule" "5-browser" "6" "7" "8" "9-chat" "A")
 
 for ws in "${WORKSPACES[@]}"; do
   sid=$(echo "$ws" | tr '#+' '__')
