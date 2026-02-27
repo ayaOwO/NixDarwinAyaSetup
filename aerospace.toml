@@ -34,7 +34,13 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center', 'exec-and-forget sketchybar --trigger aerospace_workspace_change']
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Fires on every workspace change (keybind, click, or any other trigger).
+# $AEROSPACE_FOCUSED_WORKSPACE is set by AeroSpace automatically.
+exec-on-workspace-change = ['/bin/bash', '-c',
+    '/run/current-system/sw/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -140,16 +146,16 @@ on-mode-changed = []
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = ['workspace 1-Work',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=1-Work']
-    alt-2 = ['workspace 2-work++',   'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=2-work++']
-    alt-3 = ['workspace 3-work#',    'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=3-work#']
-    alt-4 = ['workspace 4-schedule', 'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=4-schedule']
-    alt-5 = ['workspace 5-browser',  'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=5-browser']
-    alt-6 = ['workspace 6',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=6']
-    alt-7 = ['workspace 7',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=7']
-    alt-8 = ['workspace 8',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=8']
-    alt-9 = ['workspace 9-chat',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=9-chat']
-    alt-a = ['workspace A',          'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=A']
+    alt-1 = 'workspace 1-Work'
+    alt-2 = 'workspace 2-work++'
+    alt-3 = 'workspace 3-work#'
+    alt-4 = 'workspace 4-schedule'
+    alt-5 = 'workspace 5-browser'
+    alt-6 = 'workspace 6'
+    alt-7 = 'workspace 7'
+    alt-8 = 'workspace 8'
+    alt-9 = 'workspace 9-chat'
+    alt-a = 'workspace A'
     alt-b = 'workspace B'
     alt-c = 'workspace C'
     alt-d = 'workspace D'

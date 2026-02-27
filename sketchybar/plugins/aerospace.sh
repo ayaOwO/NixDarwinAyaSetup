@@ -4,8 +4,11 @@
 # $NAME = SketchyBar item name (set by SketchyBar in environment)
 
 THEME_DIR="$HOME/.config/sketchybar/themes"
-source "$THEME_DIR/catppuccin-frappe.sh"
+source "$THEME_DIR/catppuccin-latte.sh"
 source "$THEME_DIR/helpers.sh"
+
+# homebrew cask installs the CLI here; not on sketchybar's default PATH
+AEROSPACE=/opt/homebrew/bin/aerospace
 
 WS="$1"
 FOCUSED=$(aerospace list-workspaces --focused 2>/dev/null | tr -d '[:space:]')
@@ -17,7 +20,7 @@ if [ "$WS" = "$FOCUSED" ]; then
     background.color=$(c "$BLUE") \
     label.color=$(c "$BASE")
 else
-  WIN_COUNT=$(aerospace list-windows --workspace "$WS" 2>/dev/null | wc -l | tr -d ' ')
+  WIN_COUNT=$($AEROSPACE list-windows --workspace "$WS" 2>/dev/null | wc -l | tr -d ' ')
   if [ "$WIN_COUNT" -gt "0" ]; then
     # Visible (has windows): green pill
     sketchybar --animate tanh 20 --set "$NAME" \

@@ -52,7 +52,7 @@ for ws in "${WORKSPACES[@]}"; do
       background.drawing=off \
       background.color=$(c "$BLUE") \
       label.color=$(c "$SUBTEXT1") \
-      click_script="aerospace workspace \"$ws\"" \
+      click_script="/opt/homebrew/bin/aerospace workspace \"$ws\"" \
       script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
 done
 
