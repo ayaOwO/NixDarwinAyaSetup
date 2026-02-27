@@ -30,7 +30,16 @@
     let
       configuration =
         { pkgs, config, ... }:
+        # let
+        #   # Import nixpkgs for x86_64 to get x64 .NET SDK
+        #   pkgs-x64 = import nixpkgs {
+        #     system = "x86_64-darwin";
+        #     config.allowUnfree = true;
+        #   };
+        # in
         {
+          # List packages installed in system profile. To search by name, run:
+          # $ nix-env -qaP | grep wget
           environment.systemPackages = [
             pkgs.nixfmt-rfc-style
             pkgs.python3
