@@ -161,8 +161,10 @@
               ShowDayOfWeek = true;
             };
             dock = {
-              wvous-tl-corner = 2; # Top-left: Mission Control
+              wvous-tl-corner = 1; # Top-left: Mission Control
               wvous-tr-corner = 12; # Top-right: Notification Center
+              wvous-br-corner = 1; # Bottom-right: disabled
+              wvous-bl-corner = 1; # Bottom-left: disabled
 
               autohide = true;
               persistent-apps = [
