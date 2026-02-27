@@ -33,12 +33,10 @@ sketchybar --default \
   padding_left=4 \
   padding_right=4
 
-##### Left: AeroSpace Workspaces #####
+##### Left: AeroSpace Workspaces (see AeroSpace goodies: show workspaces in Sketchybar) #####
 sketchybar --add event aerospace_workspace_change
 
-WORKSPACES=("1-Work" "2-work++" "3-work#" "4-schedule" "5-browser" "6" "7" "8" "9-chat" "A")
-
-for ws in "${WORKSPACES[@]}"; do
+for ws in $(/opt/homebrew/bin/aerospace list-workspaces --all 2>/dev/null); do
   sid=$(echo "$ws" | tr '#+' '__')
   sketchybar \
     --add item "space.$sid" left \
