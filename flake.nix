@@ -2,9 +2,9 @@
   description = "Aya's MacBook Pro nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
@@ -43,13 +43,13 @@
           environment.systemPackages = [
             pkgs.nixfmt-rfc-style
             pkgs.python3
-            pkgs.mkalias
           ];
 
           homebrew = {
             enable = true;
             taps = [
               "nikitabobko/tap"
+              "FelixKratz/formulae"
               "theboredteam/boring-notch"
             ];
             brews = [
@@ -60,6 +60,7 @@
               "python@3.12"
               "mas"
               "uv"
+              "FelixKratz/formulae/sketchybar"
             ];
             casks = [
               "aerospace"
@@ -100,38 +101,31 @@
             global.lockfiles = false;
           };
 
-          services.sketchybar = {
-            enable = true;
-            package = pkgs.sketchybar;
-          };
-
           system.primaryUser = "ayak";
 
-          system.activationScripts.applications.text =
-            let
-              env = pkgs.buildEnv {
-                name = "system-applications";
-                paths = config.environment.systemPackages;
-                pathsToLink = "/Applications";
-              };
-            in
-            pkgs.lib.mkForce ''
-              echo "setting up /Applications..." >&2
-              rm -rf /Applications/Nix\ Apps
-              mkdir -p /Applications/Nix\ Apps
-              find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-              while read -r src; do
-                app_name=$(basename "$src")
-                echo "copying $src" >&2
-                ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-              done
-            '';
+          launchd.user.agents.sketchybar = {
+            serviceConfig = {
+              Label = "com.felixkratz.sketchybar";
+              ProgramArguments = [ "/opt/homebrew/bin/sketchybar" ];
+              EnvironmentVariables.PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+              RunAtLoad = true;
+              KeepAlive = true;
+              StandardOutPath = "/tmp/sketchybar.log";
+              StandardErrorPath = "/tmp/sketchybar.err";
+            };
+          };
 
-          # Runs after homebrew; symlinks configs.
           system.activationScripts.setupUserConfig.text = ''
-            echo "setting up Aerospace config..." >&2
+            USER_HOME="/Users/${config.system.primaryUser}"
+            echo "setting up user configs..." >&2
             mkdir -p "$USER_HOME/.config/aerospace"
+            mkdir -p "$USER_HOME/.config/sketchybar/plugins"
             ln -sfn /private/etc/nix-darwin/aerospace.toml "$USER_HOME/.config/aerospace/aerospace.toml"
+            ln -sfn /private/etc/nix-darwin/sketchybar/sketchybarrc "$USER_HOME/.config/sketchybar/sketchybarrc"
+            ln -sfn /private/etc/nix-darwin/sketchybar/plugins "$USER_HOME/.config/sketchybar/plugins"
+            ln -sfn /private/etc/nix-darwin/sketchybar/themes "$USER_HOME/.config/sketchybar/themes"
+            echo "setting up wallpaper..." >&2
+            osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/private/etc/nix-darwin/wallpaper.jpg\""
           '';
 
           system.activationScripts.rosetta.text = ''

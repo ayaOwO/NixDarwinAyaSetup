@@ -1,7 +1,7 @@
-sudo -E nix run nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch
+sudo -E nix run nix-darwin/nix-darwin-25.11#darwin-rebuild -- switch
 
-# Reload AeroSpace config (symlinked from this repo)
-/opt/homebrew/bin/aerospace reload-config 2>/dev/null || true
+# Reload AeroSpace so the running process picks up the new aerospace.toml
+aerospace reload-config 2>/dev/null || true
 
-# Reload sketchybar so the bar picks up the new config (and workspace state if AeroSpace started first)
-/run/current-system/sw/bin/sketchybar --reload 2>/dev/null || true
+# Restart sketchybar so it runs with the new config (new store path after switch)
+launchctl kickstart -k gui/$(id -u)/org.nixos.sketchybar 2>/dev/null || true
