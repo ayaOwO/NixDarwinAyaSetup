@@ -13,6 +13,7 @@ source "$THEME_DIR/helpers.sh"
 sketchybar --bar \
   height=32 \
   position=top \
+  topmost=window \
   sticky=on \
   padding_left=10 \
   padding_right=10 \
