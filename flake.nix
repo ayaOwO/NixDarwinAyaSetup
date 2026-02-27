@@ -190,7 +190,7 @@
               AppleShowAllExtensions = true;
               AppleShowAllFiles = true;
               AppleICUForce24HourTime = true;
-              # _HIHideMenuBar = true;
+              _HIHideMenuBar = true;
               InitialKeyRepeat = 15; # Need to verify
               KeyRepeat = 2;
               ApplePressAndHoldEnabled = false;
