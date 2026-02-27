@@ -6,9 +6,7 @@
 THEME_DIR="$HOME/.config/sketchybar/themes"
 source "$THEME_DIR/catppuccin-latte.sh"
 source "$THEME_DIR/helpers.sh"
-
-# homebrew cask installs the CLI here; not on sketchybar's default PATH
-AEROSPACE=/opt/homebrew/bin/aerospace
+source "$THEME_DIR/env.sh"
 
 WS="$1"
 # FOCUSED/PREV from exec-on-workspace-change (see https://nikitabobko.github.io/AeroSpace/guide#callbacks)
