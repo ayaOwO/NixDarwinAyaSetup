@@ -1,10 +1,12 @@
 {
-  description = "Example nix-darwin system flake";
+  description = "Aya's MacBook Pro nix-darwin system flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
@@ -15,6 +17,7 @@
       flake = false;
     };
   };
+
   outputs =
     inputs@{
       self,
@@ -27,27 +30,16 @@
     let
       configuration =
         { pkgs, config, ... }:
-        let
-          # Import nixpkgs for x86_64 to get x64 .NET SDK
-          pkgs-x64 = import nixpkgs {
-            system = "x86_64-darwin";
-            config.allowUnfree = true;
-          };
-        in
         {
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
           environment.systemPackages = [
             pkgs.nixfmt-rfc-style
             pkgs.python3
             pkgs.mkalias
           ];
 
-
           homebrew = {
             enable = true;
             taps = [
-              "homebrew/cask"
               "nikitabobko/tap"
               "theboredteam/boring-notch"
             ];
@@ -98,20 +90,14 @@
             onActivation.upgrade = true;
             global.lockfiles = false;
           };
-          # Use nix-darwin's native sketchybar service instead of the brew tap.
-          # This writes the config with correct permissions (fixes the chmod symlink error)
-          # and manages the launchd service (start on login, restart on crash).
+
           services.sketchybar = {
             enable = true;
             package = pkgs.sketchybar;
-            # builtins.readFile inlines the config so nix-darwin creates the file
-            # directly — no symlink, no permission issues.
-            config = builtins.readFile ./sketchybar/sketchybarrc;
-            # Make aerospace available on PATH inside plugin scripts
-            extraPackages = [ pkgs.jq ];
           };
 
           system.primaryUser = "ayak";
+
           system.activationScripts.applications.text =
             let
               env = pkgs.buildEnv {
@@ -121,7 +107,6 @@
               };
             in
             pkgs.lib.mkForce ''
-              # Set up applications.
               echo "setting up /Applications..." >&2
               rm -rf /Applications/Nix\ Apps
               mkdir -p /Applications/Nix\ Apps
@@ -132,29 +117,27 @@
                 ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
               done
             '';
-          # postActivation is one of the three guaranteed user hooks in nix-darwin
-          # (preActivation, extraActivation, postActivation) and runs last — after
-          # homebrew — so all packages are present before symlinking configs.
-          system.activationScripts.postActivation.text = ''
-            USER_HOME=$(dscl . -read /Users/${config.system.primaryUser} NFSHomeDirectory | awk '{print $2}')
 
-            # Symlink sketchybar plugin scripts and themes — the main sketchybarrc is
-            # managed by services.sketchybar (written with correct permissions, not a symlink)
-            echo "setting up SketchyBar plugins and themes..." >&2
-            mkdir -p "$USER_HOME/.config/sketchybar/plugins"
-            ln -sfn ${./sketchybar/plugins/aerospace.sh} "$USER_HOME/.config/sketchybar/plugins/aerospace.sh"
-            ln -sfn ${./sketchybar/themes} "$USER_HOME/.config/sketchybar/themes"
-
-            # Symlink aerospace config directly from the repo so edits take effect
-            # immediately without a full rebuild (reload with alt-shift-; -> esc)
+          # Runs after homebrew; symlinks configs and sets wallpaper.
+          system.activationScripts.setupUserConfig.text = ''
             echo "setting up Aerospace config..." >&2
             mkdir -p "$USER_HOME/.config/aerospace"
             ln -sfn /private/etc/nix-darwin/aerospace.toml "$USER_HOME/.config/aerospace/aerospace.toml"
 
-            # Set the desktop wallpaper on all displays via AppleScript
             echo "setting up wallpaper..." >&2
             osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${./wallpaper.jpg}\""
           '';
+
+          system.activationScripts.rosetta.text = ''
+            echo "Checking for Rosetta 2..." >&2
+            if ! /usr/bin/pgrep -q oahd; then
+              echo "Installing Rosetta 2..." >&2
+              /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+            else
+              echo "Rosetta 2 is already installed." >&2
+            fi
+          '';
+
           system.defaults = {
             finder = {
               ShowPathbar = true;
@@ -193,7 +176,7 @@
               AppleShowAllFiles = true;
               AppleICUForce24HourTime = true;
               _HIHideMenuBar = true;
-              InitialKeyRepeat = 15; # Need to verify
+              InitialKeyRepeat = 15;
               KeyRepeat = 2;
               ApplePressAndHoldEnabled = false;
             };
@@ -203,42 +186,16 @@
           };
 
           nix.enable = false;
-          nixpkgs.config = {
-            allowUnfree = true;
-          };
+          nix.settings.experimental-features = "nix-command flakes";
+          nixpkgs.config.allowUnfree = true;
           security.pam.services.sudo_local.touchIdAuth = true;
 
-          # Install Rosetta 2 for x64 compatibility
-          system.activationScripts.rosetta.text = ''
-            echo "Checking for Rosetta 2..." >&2
-            if ! /usr/bin/pgrep -q oahd; then
-              echo "Installing Rosetta 2..." >&2
-              /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-            else
-              echo "Rosetta 2 is already installed." >&2
-            fi
-          '';
-
-          # Necessary for using flakes on this system.
-          nix.settings.experimental-features = "nix-command flakes";
-
-          # Enable alternative shell support in nix-darwin.
-          # programs.fish.enable = true;
-
-          # Set Git commit hash for darwin-version.
           system.configurationRevision = self.rev or self.dirtyRev or null;
-
-          # Used for backwards compatibility, please read the changelog before changing.
-          # $ darwin-rebuild changelog
           system.stateVersion = 6;
-
-          # The platform the configuration will be used on.
           nixpkgs.hostPlatform = "aarch64-darwin";
         };
     in
     {
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#Ayas-MacBook-Pro
       darwinConfigurations."Ayas-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         modules = [
           configuration
