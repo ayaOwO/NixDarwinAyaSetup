@@ -48,7 +48,6 @@
             enable = true;
             taps = [
               "nikitabobko/tap"
-              "FelixKratz/formulae"
             ];
             brews = [
               "angular-cli"
@@ -58,7 +57,6 @@
               "python@3.12"
               "mas"
               "uv"
-              "FelixKratz/formulae/sketchybar"
             ];
             casks = [
               "aerospace"
@@ -98,6 +96,19 @@
             onActivation.upgrade = true;
             global.lockfiles = false;
           };
+          # Use nix-darwin's native sketchybar service instead of the brew tap.
+          # This writes the config with correct permissions (fixes the chmod symlink error)
+          # and manages the launchd service (start on login, restart on crash).
+          services.sketchybar = {
+            enable = true;
+            package = pkgs.sketchybar;
+            # builtins.readFile inlines the config so nix-darwin creates the file
+            # directly — no symlink, no permission issues.
+            config = builtins.readFile ./sketchybar/sketchybarrc;
+            # Make aerospace available on PATH inside plugin scripts
+            extraPackages = [ pkgs.jq ];
+          };
+
           system.primaryUser = "ayak";
           system.activationScripts.applications.text =
             let
@@ -125,11 +136,12 @@
           system.activationScripts.postActivation.text = ''
             USER_HOME=$(dscl . -read /Users/${config.system.primaryUser} NFSHomeDirectory | awk '{print $2}')
 
-            # Symlink sketchybar config and plugins from the repo into ~/.config
-            echo "setting up SketchyBar config..." >&2
+            # Symlink sketchybar plugin scripts and themes — the main sketchybarrc is
+            # managed by services.sketchybar (written with correct permissions, not a symlink)
+            echo "setting up SketchyBar plugins and themes..." >&2
             mkdir -p "$USER_HOME/.config/sketchybar/plugins"
-            ln -sfn ${./sketchybar/sketchybarrc} "$USER_HOME/.config/sketchybar/sketchybarrc"
             ln -sfn ${./sketchybar/plugins/aerospace.sh} "$USER_HOME/.config/sketchybar/plugins/aerospace.sh"
+            ln -sfn ${./sketchybar/themes} "$USER_HOME/.config/sketchybar/themes"
 
             # Symlink aerospace config directly from the repo so edits take effect
             # immediately without a full rebuild (reload with alt-shift-; -> esc)

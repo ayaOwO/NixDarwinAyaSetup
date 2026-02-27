@@ -1,7 +1,13 @@
 #!/bin/bash
 
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+THEME_DIR="$HOME/.config/sketchybar/themes"
 FONT="Maple Mono NF"
+
+##### Load Catppuccin theme (change filename to switch flavour) #####
+# Available: catppuccin-mocha.sh | catppuccin-macchiato.sh | catppuccin-frappe.sh | catppuccin-latte.sh
+source "$THEME_DIR/catppuccin-latte.sh"
+source "$THEME_DIR/helpers.sh"
 
 ##### Bar Appearance #####
 sketchybar --bar \
@@ -10,17 +16,19 @@ sketchybar --bar \
   sticky=on \
   padding_left=10 \
   padding_right=10 \
-  color=0xee1e1e2e \
-  blur_radius=20 \
+  color=$(c "$BASE") \
+  border_width=1 \
+  border_color=$(c "$SURFACE1") \
+  blur_radius=0 \
   shadow=off
 
 ##### Defaults #####
 sketchybar --default \
   updates=when_shown \
   icon.font="$FONT:Regular:13.0" \
-  icon.color=0xffcdd6f4 \
+  icon.color=$(c "$TEXT") \
   label.font="$FONT:Regular:13.0" \
-  label.color=0xffcdd6f4 \
+  label.color=$(c "$TEXT") \
   padding_left=4 \
   padding_right=4
 
@@ -41,8 +49,8 @@ for ws in "${WORKSPACES[@]}"; do
       background.height=22 \
       background.corner_radius=4 \
       background.drawing=off \
-      background.color=0xff89b4fa \
-      label.color=0xff585b70 \
+      background.color=$(c "$BLUE") \
+      label.color=$(c "$SUBTEXT1") \
       click_script="aerospace workspace \"$ws\"" \
       script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
 done
@@ -53,7 +61,8 @@ sketchybar --add item clock right \
     update_freq=10 \
     icon=󰃰 \
     icon.padding_right=4 \
-    icon.color=0xff89b4fa \
+    icon.color=$(c "$LAVENDER") \
+    label.color=$(c "$TEXT") \
     script="sketchybar --set \$NAME label=\"\$(date '+%a %d %b  %H:%M')\""
 
 ##### Initialize #####
