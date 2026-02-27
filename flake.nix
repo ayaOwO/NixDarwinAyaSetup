@@ -178,13 +178,7 @@
           nixpkgs.config = {
             allowUnfree = true;
           };
-          services = {
-
-            # sketchybar = {
-            #         enable = true;
-            #         config = builtins.readFile ./sketchybarrc;
-            #     };
-          };
+          services = { };
 
           security.pam.services.sudo_local.touchIdAuth = true;
 
