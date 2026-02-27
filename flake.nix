@@ -119,28 +119,27 @@
                 ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
               done
             '';
-          system.activationScripts.sketchybarConfig.text = ''
-            echo "setting up SketchyBar config..." >&2
+          # postActivation is one of the three guaranteed user hooks in nix-darwin
+          # (preActivation, extraActivation, postActivation) and runs last — after
+          # homebrew — so all packages are present before symlinking configs.
+          system.activationScripts.postActivation.text = ''
             USER_HOME=$(dscl . -read /Users/${config.system.primaryUser} NFSHomeDirectory | awk '{print $2}')
+
+            # Symlink sketchybar config and plugins from the repo into ~/.config
+            echo "setting up SketchyBar config..." >&2
             mkdir -p "$USER_HOME/.config/sketchybar/plugins"
             ln -sfn ${./sketchybar/sketchybarrc} "$USER_HOME/.config/sketchybar/sketchybarrc"
             ln -sfn ${./sketchybar/plugins/aerospace.sh} "$USER_HOME/.config/sketchybar/plugins/aerospace.sh"
-          '';
-          system.activationScripts.wallpaper.text = ''
+
+            # Symlink aerospace config directly from the repo so edits take effect
+            # immediately without a full rebuild (reload with alt-shift-; -> esc)
+            echo "setting up Aerospace config..." >&2
+            mkdir -p "$USER_HOME/.config/aerospace"
+            ln -sfn /private/etc/nix-darwin/aerospace.toml "$USER_HOME/.config/aerospace/aerospace.toml"
+
+            # Set the desktop wallpaper on all displays via AppleScript
             echo "setting up wallpaper..." >&2
             osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${./wallpaper.jpg}\""
-          '';
-          system.activationScripts.aerospaceConfig.text = ''
-            # Set up Aerospace configuration file
-            echo "setting up Aerospace config..." >&2
-            USER_HOME=$(dscl . -read /Users/${config.system.primaryUser} NFSHomeDirectory | awk '{print $2}')
-            mkdir -p "$USER_HOME/.config/aerospace"
-            if [ -f "$USER_HOME/.aerospace.toml" ] && [ ! -L "$USER_HOME/.aerospace.toml" ]; then
-              echo "backing up existing ~/.aerospace.toml..." >&2
-              mv "$USER_HOME/.aerospace.toml" "$USER_HOME/.aerospace.toml.backup"
-            fi
-            ln -sfn ${./aerospace.toml} "$USER_HOME/.aerospace.toml"
-            ln -sfn ${./aerospace.toml} "$USER_HOME/.config/aerospace/aerospace.toml"
           '';
           system.defaults = {
             finder = {
