@@ -7,7 +7,7 @@ config-version = 2
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = ['exec-and-forget sketchybar --reload']
 
 # Start AeroSpace at login
 start-at-login = true
@@ -34,7 +34,7 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center', 'exec-and-forget sketchybar --trigger aerospace_workspace_change']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -79,12 +79,12 @@ on-mode-changed = []
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 0
-    inner.vertical =   0
-    outer.left =       0
-    outer.bottom =     0
-    outer.top =        0
-    outer.right =      0
+    inner.horizontal = 8
+    inner.vertical =   8
+    outer.left =       8
+    outer.bottom =     8
+    outer.top =        32
+    outer.right =      8
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -140,16 +140,16 @@ on-mode-changed = []
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace Work'
-    alt-2 = 'workspace work++'
-    alt-3 = 'workspace work#'
-    alt-4 = 'workspace schedule'
-    alt-5 = 'workspace browser'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace chat'
-    alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
+    alt-1 = ['workspace Work',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=Work']
+    alt-2 = ['workspace work++',   'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=work++']
+    alt-3 = ['workspace work#',    'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=work#']
+    alt-4 = ['workspace schedule', 'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=schedule']
+    alt-5 = ['workspace browser',  'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=browser']
+    alt-6 = ['workspace 6',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=6']
+    alt-7 = ['workspace 7',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=7']
+    alt-8 = ['workspace 8',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=8']
+    alt-9 = ['workspace chat',     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=chat']
+    alt-a = ['workspace A',        'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=A']
     alt-b = 'workspace B'
     alt-c = 'workspace C'
     alt-d = 'workspace D'
