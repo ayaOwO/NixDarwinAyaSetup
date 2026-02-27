@@ -1,5 +1,6 @@
 # Homebrew taps
 tap "nikitabobko/tap"
+tap "FelixKratz/formulae"
 
 # Homebrew packages
 brew "angular-cli"
@@ -8,6 +9,8 @@ brew "neovim"
 brew "node"
 brew "python@3.12"
 brew "mas"  # Mac App Store CLI
+brew "FelixKratz/formulae/sketchybar"
+brew "uv"
 
 # Homebrew casks
 cask "aerospace"
@@ -33,6 +36,8 @@ cask "powershell"
 cask "vlc"
 cask "jetbrains-toolbox"
 cask "betterdisplay"
+cask "claude"
+cask "boring-notch"
 
 # Mac App Store apps
 mas "Word", id: 462054704

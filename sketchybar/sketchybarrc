@@ -1,0 +1,60 @@
+#!/bin/bash
+
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+FONT="Maple Mono NF"
+
+##### Bar Appearance #####
+sketchybar --bar \
+  height=32 \
+  position=top \
+  sticky=on \
+  padding_left=10 \
+  padding_right=10 \
+  color=0xee1e1e2e \
+  blur_radius=20 \
+  shadow=off
+
+##### Defaults #####
+sketchybar --default \
+  updates=when_shown \
+  icon.font="$FONT:Regular:13.0" \
+  icon.color=0xffcdd6f4 \
+  label.font="$FONT:Regular:13.0" \
+  label.color=0xffcdd6f4 \
+  padding_left=4 \
+  padding_right=4
+
+##### Left: AeroSpace Workspaces #####
+sketchybar --add event aerospace_workspace_change
+
+WORKSPACES=("Work" "work++" "work#" "schedule" "browser" "6" "7" "8" "chat" "A")
+
+for ws in "${WORKSPACES[@]}"; do
+  sid=$(echo "$ws" | tr '#+' '__')
+  sketchybar \
+    --add item "space.$sid" left \
+    --subscribe "space.$sid" aerospace_workspace_change \
+    --set "space.$sid" \
+      label="$ws" \
+      label.padding_left=8 \
+      label.padding_right=8 \
+      background.height=22 \
+      background.corner_radius=4 \
+      background.drawing=off \
+      background.color=0xff89b4fa \
+      label.color=0xff585b70 \
+      click_script="aerospace workspace \"$ws\"" \
+      script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
+done
+
+##### Right: Date + Clock #####
+sketchybar --add item clock right \
+  --set clock \
+    update_freq=10 \
+    icon=󰃰 \
+    icon.padding_right=4 \
+    icon.color=0xff89b4fa \
+    script="sketchybar --set \$NAME label=\"\$(date '+%a %d %b  %H:%M')\""
+
+##### Initialize #####
+sketchybar --update
