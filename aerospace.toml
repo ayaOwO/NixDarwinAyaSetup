@@ -97,6 +97,9 @@ on-mode-changed = []
 # 'main' binding mode must be always presented
 # Fallback value (if you omit the key): mode.main.binding = {}
 [mode.main.binding]
+    # Goodness #10: disable "hide application" / "hide others"
+    cmd-h = []
+    cmd-alt-h = []
 
     # All possible keys:
     # - Letters.        a, b, c, ..., z
