@@ -48,6 +48,7 @@
             enable = true;
             taps = [
               "nikitabobko/tap"
+              "FelixKratz/formulae"
             ];
             brews = [
               "angular-cli"
@@ -56,6 +57,8 @@
               "node"
               "python@3.12"
               "mas"
+              "uv"
+              "FelixKratz/formulae/sketchybar"
             ];
             casks = [
               "aerospace"
@@ -81,6 +84,8 @@
               "vlc"
               "jetbrains-toolbox"
               "betterdisplay"
+              "claude"
+              "boring-notch"
             ];
             masApps = {
               "Word" = 462054704;
@@ -115,6 +120,17 @@
                 ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
               done
             '';
+          system.activationScripts.sketchybarConfig.text = ''
+            echo "setting up SketchyBar config..." >&2
+            USER_HOME=$(dscl . -read /Users/${config.system.primaryUser} NFSHomeDirectory | awk '{print $2}')
+            mkdir -p "$USER_HOME/.config/sketchybar/plugins"
+            ln -sfn ${./sketchybar/sketchybarrc} "$USER_HOME/.config/sketchybar/sketchybarrc"
+            ln -sfn ${./sketchybar/plugins/aerospace.sh} "$USER_HOME/.config/sketchybar/plugins/aerospace.sh"
+          '';
+          system.activationScripts.wallpaper.text = ''
+            echo "setting up wallpaper..." >&2
+            osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${./wallpaper.jpg}\""
+          '';
           system.activationScripts.aerospaceConfig.text = ''
             # Set up Aerospace configuration file
             echo "setting up Aerospace config..." >&2
@@ -178,8 +194,6 @@
           nixpkgs.config = {
             allowUnfree = true;
           };
-          services = { };
-
           security.pam.services.sudo_local.touchIdAuth = true;
 
           # Install Rosetta 2 for x64 compatibility
