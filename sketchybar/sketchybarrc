@@ -8,6 +8,7 @@ FONT="Maple Mono NF"
 # Available: catppuccin-mocha.sh | catppuccin-macchiato.sh | catppuccin-frappe.sh | catppuccin-latte.sh
 source "$THEME_DIR/catppuccin-latte.sh"
 source "$THEME_DIR/helpers.sh"
+source "$THEME_DIR/env.sh"
 
 ##### Bar Appearance #####
 sketchybar --bar \
@@ -36,7 +37,7 @@ sketchybar --default \
 ##### Left: AeroSpace Workspaces (see AeroSpace goodies: show workspaces in Sketchybar) #####
 sketchybar --add event aerospace_workspace_change
 
-for ws in $(/opt/homebrew/bin/aerospace list-workspaces --all 2>/dev/null); do
+for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
   sid=$(echo "$ws" | tr '#+' '__')
   sketchybar \
     --add item "space.$sid" left \
@@ -50,7 +51,7 @@ for ws in $(/opt/homebrew/bin/aerospace list-workspaces --all 2>/dev/null); do
       background.drawing=off \
       background.color=$(c "$BLUE") \
       label.color=$(c "$SUBTEXT1") \
-      click_script="/opt/homebrew/bin/aerospace workspace \"$ws\"" \
+      click_script="$AEROSPACE workspace \"$ws\"" \
       script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
 done
 
