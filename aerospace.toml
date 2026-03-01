@@ -51,20 +51,20 @@ automatically-unhide-macos-hidden-apps = false
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["1-Work", "2-work++", "3-work#", "4-schedule", "5-browser", "6", "7", "8", "9-chat", "A"]
+persistent-workspaces = ["1-Work", "2-Work++", "3-Work#", "4-Schedule", "5-Browser", "6", "7", "8", "9-Chat", "A"]
 
 # Assign workspaces to monitors (1-indexed). See:
 # https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [workspace-to-monitor-force-assignment]
 "1-Work" = 2
-"2-work++" = 2
-"3-work#" = 2
-"4-schedule" = 2
-"5-browser" = 1
+"2-Work++" = 2
+"3-Work#" = 2
+"4-Schedule" = 2
+"5-Browser" = 1
 6 = 2
 7 = 2
 8 = 2
-"9-chat" = 1
+"9-Chat" = 1
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -163,14 +163,14 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1-Work'
-    alt-shift-2 = 'move-node-to-workspace 2-work++'
-    alt-shift-3 = 'move-node-to-workspace 3-work#'
-    alt-shift-4 = 'move-node-to-workspace 4-schedule'
-    alt-shift-5 = 'move-node-to-workspace 5-browser'
+    alt-shift-2 = 'move-node-to-workspace 2-Work++'
+    alt-shift-3 = 'move-node-to-workspace 3-Work#'
+    alt-shift-4 = 'move-node-to-workspace 4-Schedule'
+    alt-shift-5 = 'move-node-to-workspace 5-Browser'
     alt-shift-6 = 'move-node-to-workspace 6'
     alt-shift-7 = 'move-node-to-workspace 7'
     alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace 9-chat'
+    alt-shift-9 = 'move-node-to-workspace 9-Chat'
     alt-shift-a = 'move-node-to-workspace A'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -200,7 +200,7 @@ on-mode-changed = []
 # See: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
 [[on-window-detected]]
 if.app-name-regex-substring = 'terminal|alacritty|iterm'
-run = 'move-node-to-workspace 3-work#'
+run = 'move-node-to-workspace 3-Work#'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'cursor'
@@ -208,41 +208,41 @@ run = 'move-node-to-workspace 1-Work'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'rider'
-run = 'move-node-to-workspace 2-work++'
+run = 'move-node-to-workspace 2-Work++'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'safari'
-run = 'move-node-to-workspace 5-browser'
+run = 'move-node-to-workspace 5-Browser'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'chrome'
-run = 'move-node-to-workspace 5-browser'
+run = 'move-node-to-workspace 5-Browser'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'obsidian'
-run = 'move-node-to-workspace 4-schedule'
+run = 'move-node-to-workspace 4-Schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'mail'
 if.app-id = 'com.apple.mail'
-run = 'move-node-to-workspace 4-schedule'
+run = 'move-node-to-workspace 4-Schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'calendar'
-run = 'move-node-to-workspace 4-schedule'
+run = 'move-node-to-workspace 4-Schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = '^notion$'
-run = 'move-node-to-workspace 4-schedule'
+run = 'move-node-to-workspace 4-Schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'notion calendar'
-run = 'move-node-to-workspace 4-schedule'
+run = 'move-node-to-workspace 4-Schedule'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'zoom'
-run = 'move-node-to-workspace 9-chat'
+run = 'move-node-to-workspace 9-Chat'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'whatsapp'
-run = 'move-node-to-workspace 9-chat'
+run = 'move-node-to-workspace 9-Chat'
