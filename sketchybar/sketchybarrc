@@ -55,43 +55,7 @@ for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
       script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
 done
 
-##### Right: Upcoming Meetings + Now Playing + Battery + Wi-Fi + Date/Clock #####
-sketchybar --add item meetings right \
-  --set meetings \
-    update_freq=300 \
-    icon= \
-    icon.color=$(c "$YELLOW") \
-    popup.height=20 \
-    script="$PLUGIN_DIR/meetings.sh" \
-  --subscribe meetings mouse.entered mouse.exited mouse.exited.global
-
-sketchybar --add item nowplaying right \
-  --set nowplaying \
-    update_freq=3 \
-    script="$PLUGIN_DIR/nowplaying.sh"
-
-sketchybar --add item volume right \
-  --set volume \
-    update_freq=2 \
-    script="$PLUGIN_DIR/volume.sh" \
-  --subscribe volume volume_change
-
-sketchybar --add item battery right \
-  --set battery \
-    update_freq=60 \
-    script="$PLUGIN_DIR/battery.sh"
-
-sketchybar --add item nosleep right \
-  --set nosleep \
-    update_freq=10 \
-    script="$PLUGIN_DIR/nosleep.sh" \
-    click_script="$PLUGIN_DIR/nosleep.sh toggle"
-
-sketchybar --add item wifi right \
-  --set wifi \
-    update_freq=10 \
-    script="$PLUGIN_DIR/wifi.sh"
-
+##### Right: Date/Clock #####
 sketchybar --add item clock right \
   --set clock \
     update_freq=10 \
