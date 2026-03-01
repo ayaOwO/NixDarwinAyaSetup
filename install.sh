@@ -56,14 +56,6 @@ fi
 echo "Setting wallpaper..."
 osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"$REPO_ROOT/wallpaper.jpg\""
 
-# Sketchybar launchd agent
-echo "Installing sketchybar LaunchAgent..."
-mkdir -p "$USER_HOME/Library/LaunchAgents"
-PLIST="$USER_HOME/Library/LaunchAgents/com.felixkratz.sketchybar.plist"
-launchctl unload "$PLIST" 2>/dev/null || true
-rm -f "$PLIST"
-cp "$REPO_ROOT/sketchybar/com.felixkratz.sketchybar.plist" "$USER_HOME/Library/LaunchAgents/"
-launchctl load "$PLIST"
-
-echo "Restarting sketchybar..."
-launchctl kickstart -k "gui/$(id -u)/com.felixkratz.sketchybar" 2>/dev/null || true
+# Sketchybar (brew services only; remove custom LaunchAgent if present)
+echo "Starting sketchybar..."
+brew services restart sketchybar
