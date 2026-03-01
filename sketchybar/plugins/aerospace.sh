@@ -14,13 +14,7 @@ FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '
 
 app_icon() {
   case "$1" in
-    "Cursor"|"cursor")
-      printf ''
-      ;;
-    "Rider"|"JetBrains Rider")
-      printf ''
-      ;;
-    "Code"|"Visual Studio Code"|"VSCodium")
+    "Cursor"|"cursor"|"Rider"|"JetBrains Rider"|"Code"|"Visual Studio Code"|"VSCodium")
       printf ''
       ;;
     "Mail"|"Microsoft Outlook")
@@ -34,6 +28,33 @@ app_icon() {
       ;;
     "Obsidian"|"Notion")
       printf ''
+      ;;
+    "System Settings"|"System Preferences")
+      printf ''
+      ;;
+    "Asana")
+      printf ''
+      ;;
+    "Slack")
+      printf ''
+      ;;
+    "Terminal"|"Alacritty"|"iTerm"|"Warp")
+      printf ''
+      ;;
+    "WhatsApp"*)
+      printf ''
+      ;;
+    "Claude")
+      printf ''
+      ;;
+    "Spotify")
+      printf ''
+      ;;
+    "OBS"|"OBS Studio")
+      printf ''
+      ;;
+    "PostgreSQL"|"DBeaver")
+      printf ''
       ;;
     *)
       printf ''
