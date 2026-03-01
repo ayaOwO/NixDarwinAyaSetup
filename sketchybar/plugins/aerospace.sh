@@ -24,55 +24,8 @@ FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '
 app_icon() {
   if declare -f __icon_map &>/dev/null; then
     __icon_map "$1"
-    [ -n "${icon_result:-}" ] && printf '%s' "$icon_result" && return
+    [ -n "${icon_result:-}" ] && printf '%s' "$icon_result"
   fi
-  case "$1" in
-    "Cursor"|"cursor"|"Rider"|"JetBrains Rider"|"Code"|"Visual Studio Code"|"VSCodium")
-      printf ''
-      ;;
-    "Mail"|"Microsoft Outlook")
-      printf ''
-      ;;
-    "Safari"|"Google Chrome")
-      printf ''
-      ;;
-    "Calendar"|"Notion Calendar")
-      printf ''
-      ;;
-    "Obsidian"|"Notion")
-      printf ''
-      ;;
-    "System Settings"|"System Preferences")
-      printf ''
-      ;;
-    "Asana")
-      printf ''
-      ;;
-    "Slack")
-      printf ''
-      ;;
-    "Terminal"|"Alacritty"|"iTerm"|"Warp")
-      printf ''
-      ;;
-    "WhatsApp"*)
-      printf ''
-      ;;
-    "Claude")
-      printf ''
-      ;;
-    "Spotify")
-      printf ''
-      ;;
-    "OBS"|"OBS Studio")
-      printf ''
-      ;;
-    "PostgreSQL"|"DBeaver")
-      printf ''
-      ;;
-    *)
-      printf ''
-      ;;
-  esac
 }
 
 # Build icon string (app icons only, uses SPACE_FONT) and label (workspace name only, uses FONT)
