@@ -17,7 +17,7 @@ for ICON_MAP_SH in "$CONFIG_DIR/icon_map.sh" "$CONFIG_DIR/helpers/icon_map.sh"; 
   [ -r "$ICON_MAP_SH" ] && source "$ICON_MAP_SH" && break
 done
 
-WS="$1"
+WORKSPACE="$1"
 # FOCUSED/PREV from exec-on-workspace-change (see https://nikitabobko.github.io/AeroSpace/guide#callbacks)
 FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '[:space:]')}"
 
@@ -75,43 +75,51 @@ app_icon() {
   esac
 }
 
-# Build label: workspace name plus app icons for windows on that workspace
-LABEL="$WS"
-WINDOW_APPS="$($AEROSPACE list-windows --workspace "$WS" 2>/dev/null | awk -F '|' '{print $2}' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+# Build icon string (app icons only, uses SPACE_FONT) and label (workspace name only, uses FONT)
+ICONS=""
+WINDOW_APPS="$($AEROSPACE list-windows --workspace "$WORKSPACE" 2>/dev/null | awk -F '|' '{print $2}' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
 
 if [ -n "$WINDOW_APPS" ]; then
-  # Deduplicate app names to avoid spammy icons
   while IFS= read -r app; do
     [ -z "$app" ] && continue
     icon="$(app_icon "$app")"
     [ -z "$icon" ] && continue
-    LABEL="$LABEL $icon"
+    ICONS="$ICONS $icon"
   done <<EOF
 $(printf '%s\n' "$WINDOW_APPS" | sort -u)
 EOF
+  ICONS="${ICONS# }"
 fi
 
-if [ "$WS" = "$FOCUSED" ]; then
-  # Focused: blue pill, dark label
+# Two items: name (FONT) with pill, icons (SPACE_FONT) with no background
+ICONS_ITEM="${NAME}.icons"
+if [ "$WORKSPACE" = "$FOCUSED" ]; then
   sketchybar --animate tanh 20 --set "$NAME" \
     background.drawing=on \
     background.color=$(c "$BLUE") \
-    label="$LABEL" \
+    label="$WORKSPACE" \
     label.color=$(c "$BASE")
+  sketchybar --animate tanh 20 --set "$ICONS_ITEM" \
+    icon="$ICONS" \
+    icon.color=$(c "$BASE")
 else
-  WIN_COUNT=$($AEROSPACE list-windows --workspace "$WS" 2>/dev/null | wc -l | tr -d ' ')
+  WIN_COUNT=$($AEROSPACE list-windows --workspace "$WORKSPACE" 2>/dev/null | wc -l | tr -d ' ')
   if [ "$WIN_COUNT" -gt "0" ]; then
-    # Visible (has windows): green pill
     sketchybar --animate tanh 20 --set "$NAME" \
       background.drawing=on \
       background.color=$(c "$GREEN") \
-      label="$LABEL" \
+      label="$WORKSPACE" \
       label.color=$(c "$BASE")
+    sketchybar --animate tanh 20 --set "$ICONS_ITEM" \
+      icon="$ICONS" \
+      icon.color=$(c "$BASE")
   else
-    # Empty: no pill, subtle label (Overlay 1 = Subtle per style guide)
     sketchybar --animate tanh 20 --set "$NAME" \
       background.drawing=off \
-      label="$LABEL" \
+      label="$WORKSPACE" \
       label.color=$(c "$OVERLAY1")
+    sketchybar --animate tanh 20 --set "$ICONS_ITEM" \
+      icon="$ICONS" \
+      icon.color=$(c "$OVERLAY1")
   fi
 fi
