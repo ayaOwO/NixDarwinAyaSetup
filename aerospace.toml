@@ -150,14 +150,14 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
     alt-1 = 'workspace 1-Work'
-    alt-2 = 'workspace 2-work++'
-    alt-3 = 'workspace 3-work#'
-    alt-4 = 'workspace 4-schedule'
-    alt-5 = 'workspace 5-browser'
+    alt-2 = 'workspace 2-Work++'
+    alt-3 = 'workspace 3-Work#'
+    alt-4 = 'workspace 4-Schedule'
+    alt-5 = 'workspace 5-Browser'
     alt-6 = 'workspace 6'
     alt-7 = 'workspace 7'
     alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9-chat'
+    alt-9 = 'workspace 9-Chat'
     alt-a = 'workspace A'
     alt-f = 'fullscreen'
 
