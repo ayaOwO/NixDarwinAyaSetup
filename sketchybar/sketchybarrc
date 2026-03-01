@@ -26,7 +26,7 @@ SPACE_LABEL_PADDING_RIGHT=4
 SPACE_ICONS_PADDING_LEFT=2
 SPACE_ICONS_PADDING_RIGHT=8
 POPUP_HEIGHT=22
-# Workspace: label (workspace name) vs icons (app icons) use different fonts
+# Workspace: single item with icon (ICON font) + label (FONT)
 SPACE_LABEL_FONT="$FONT:Regular:$FONT_SIZE"
 SPACE_ICON_FONT="$ICON_FONT:Regular:$FONT_SIZE"
 UPDATE_FREQ_FAST=2
@@ -69,14 +69,19 @@ sketchybar --add event aerospace_workspace_change
 
 for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
   sid=$(echo "$ws" | tr '#+' '__')
-  # Workspace plugin: label (workspace name) and icons (app icons) use different fonts
+  # Display label: strip leading "N-" from workspace name (e.g. 1-Work -> Work, 9-chat -> chat)
+  ws_label="$ws"
+  [[ "$ws" =~ ^[0-9]+-(.+)$ ]] && ws_label="${BASH_REMATCH[1]}"
+  # Workspace: one item — icon (ICON font) + label (FONT)
   sketchybar \
     --add item "space.$sid" left \
     --subscribe "space.$sid" aerospace_workspace_change \
     --set "space.$sid" \
-      label.font="$SPACE_LABEL_FONT" \
+      icon.font="$SPACE_ICON_FONT" \
       icon= \
-      label="$ws" \
+      label.font="$SPACE_LABEL_FONT" \
+      label="$ws_label" \
+      icon.padding_right=$SPACE_ICONS_PADDING_LEFT \
       label.padding_right=$SPACE_LABEL_PADDING_RIGHT \
       padding_left=$SPACE_PADDING_LEFT \
       padding_right=$SPACE_PADDING_RIGHT \
@@ -84,20 +89,10 @@ for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
       background.corner_radius=$PILL_CORNER_RADIUS \
       background.drawing=off \
       background.color=$(c "$BLUE") \
+      icon.color=$(c "$SUBTEXT1") \
       label.color=$(c "$SUBTEXT1") \
       click_script="$AEROSPACE workspace \"$ws\"" \
       script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
-  sketchybar \
-    --add item "space.${sid}.icons" left \
-    --set "space.${sid}.icons" \
-      icon.font="$SPACE_ICON_FONT" \
-      icon= \
-      label= \
-      padding_left=$SPACE_ICONS_PADDING_LEFT \
-      padding_right=$SPACE_ICONS_PADDING_RIGHT \
-      background.drawing=off \
-      icon.color=$(c "$SUBTEXT1") \
-      click_script="$AEROSPACE workspace \"$ws\""
 done
 
 ##### Right: Next Meeting (Notion Calendar style) + Current Window + Network + RAM + Date/Clock (rainbow icons) #####
