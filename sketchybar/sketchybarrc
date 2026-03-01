@@ -2,7 +2,6 @@
 
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 THEME_DIR="$HOME/.config/sketchybar/themes"
-FONT="Maple Mono NF"
 
 ##### Load Catppuccin theme (change filename to switch flavour) #####
 # Available: catppuccin-mocha.sh | catppuccin-macchiato.sh | catppuccin-frappe.sh | catppuccin-latte.sh
@@ -10,58 +9,175 @@ source "$THEME_DIR/catppuccin-latte.sh"
 source "$THEME_DIR/helpers.sh"
 source "$THEME_DIR/env.sh"
 
+##### Layout constants #####
+BAR_HEIGHT=38
+BAR_PADDING=10
+BAR_BORDER_WIDTH=1
+BAR_BLUR_RADIUS=0
+PADDING_DEFAULT=4
+PADDING_ICON_RIGHT=4
+FONT_SIZE=13.0
+FONT_SIZE_SMALL=12.0
+FONT_SIZE_LARGE=14.0
+PILL_HEIGHT=22
+PILL_CORNER_RADIUS=4
+SPACE_PADDING_LEFT=8
+SPACE_PADDING_RIGHT=0
+SPACE_LABEL_PADDING_RIGHT=4
+SPACE_ICONS_PADDING_LEFT=2
+SPACE_ICONS_PADDING_RIGHT=8
+POPUP_HEIGHT=22
+UPDATE_FREQ_FAST=2
+UPDATE_FREQ_MED=5
+UPDATE_FREQ_SLOW=10
+UPDATE_FREQ_MINUTE=60
+
 ##### Bar Appearance #####
 sketchybar --bar \
-  notch_display_height=38 \
+  notch_display_height=$BAR_HEIGHT \
   position=top \
   topmost=window \
   sticky=on \
-  padding_left=10 \
-  padding_right=10 \
+  padding_left=$BAR_PADDING \
+  padding_right=$BAR_PADDING \
   color=$(c "$BASE") \
-  border_width=1 \
+  border_width=$BAR_BORDER_WIDTH \
   border_color=$(c "$SURFACE1") \
-  blur_radius=0 \
+  blur_radius=$BAR_BLUR_RADIUS \
   shadow=off
 
 ##### Defaults #####
 sketchybar --default \
   updates=when_shown \
-  icon.font="$FONT:Regular:13.0" \
+  icon.font="$FONT:Regular:$FONT_SIZE" \
   icon.color=$(c "$TEXT") \
-  label.font="$FONT:Regular:13.0" \
+  label.font="$FONT:Regular:$FONT_SIZE" \
   label.color=$(c "$TEXT") \
-  padding_left=4 \
-  padding_right=4
+  padding_left=$PADDING_DEFAULT \
+  padding_right=$PADDING_DEFAULT
 
 ##### Left: AeroSpace Workspaces (see AeroSpace goodies: show workspaces in Sketchybar) #####
 sketchybar --add event aerospace_workspace_change
 
 for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
   sid=$(echo "$ws" | tr '#+' '__')
+  # Workspace plugin: name (Nerd Font) then icons (App Font); one pill behind name only
   sketchybar \
     --add item "space.$sid" left \
     --subscribe "space.$sid" aerospace_workspace_change \
     --set "space.$sid" \
+      label.font="$FONT:Regular:$FONT_SIZE" \
+      icon= \
       label="$ws" \
-      label.padding_left=8 \
-      label.padding_right=8 \
-      background.height=22 \
-      background.corner_radius=4 \
+      label.padding_right=$SPACE_LABEL_PADDING_RIGHT \
+      padding_left=$SPACE_PADDING_LEFT \
+      padding_right=$SPACE_PADDING_RIGHT \
+      background.height=$PILL_HEIGHT \
+      background.corner_radius=$PILL_CORNER_RADIUS \
       background.drawing=off \
       background.color=$(c "$BLUE") \
       label.color=$(c "$SUBTEXT1") \
       click_script="$AEROSPACE workspace \"$ws\"" \
       script="bash $PLUGIN_DIR/aerospace.sh \"$ws\""
+  sketchybar \
+    --add item "space.${sid}.icons" left \
+    --set "space.${sid}.icons" \
+      icon.font="$SPACE_FONT:Regular:$FONT_SIZE" \
+      icon= \
+      label= \
+      padding_left=$SPACE_ICONS_PADDING_LEFT \
+      padding_right=$SPACE_ICONS_PADDING_RIGHT \
+      background.drawing=off \
+      icon.color=$(c "$SUBTEXT1") \
+      click_script="$AEROSPACE workspace \"$ws\""
 done
 
-##### Right: Date/Clock #####
+##### Right: Next Meeting (Notion Calendar style) + Current Window + Network + RAM + Date/Clock (rainbow icons) #####
+sketchybar --add item next_meeting right \
+  --set next_meeting \
+    icon=󰃰 \
+    icon.padding_right=$PADDING_ICON_RIGHT \
+    icon.color=$(c "$RED") \
+    label="" \
+    label.color=$(c "$TEXT") \
+    update_freq=$UPDATE_FREQ_MINUTE \
+    script="bash $PLUGIN_DIR/next_meeting.sh" \
+    click_script="bash $PLUGIN_DIR/meeting_popup.sh next_meeting" \
+    popup.align=right \
+    popup.height=$POPUP_HEIGHT
+
+sketchybar --add item next_meeting.1 popup.next_meeting \
+  --set next_meeting.1 \
+    label="—" \
+    drawing=off \
+    label.font="$FONT:Regular:$FONT_SIZE_SMALL"
+
+sketchybar --add item next_meeting.2 popup.next_meeting \
+  --set next_meeting.2 \
+    label="—" \
+    drawing=off \
+    label.font="$FONT:Regular:$FONT_SIZE_SMALL"
+
+sketchybar --add item next_meeting.3 popup.next_meeting \
+  --set next_meeting.3 \
+    label="—" \
+    drawing=off \
+    label.font="$FONT:Regular:$FONT_SIZE_SMALL"
+
+sketchybar --add item next_meeting.4 popup.next_meeting \
+  --set next_meeting.4 \
+    label="—" \
+    drawing=off \
+    label.font="$FONT:Regular:$FONT_SIZE_SMALL"
+
+sketchybar --add item current_window right \
+  --set current_window \
+    icon= \
+    icon.padding_right=$PADDING_ICON_RIGHT \
+    icon.color=$(c "$PEACH") \
+    label="—" \
+    label.color=$(c "$TEXT") \
+    update_freq=$UPDATE_FREQ_FAST \
+    script="bash $PLUGIN_DIR/current_window.sh"
+
+sketchybar --add item network right \
+  --set network \
+    icon='' \
+    update_freq=$UPDATE_FREQ_MED \
+    script="bash $PLUGIN_DIR/network.sh" \
+    icon.color=$(c "$YELLOW")
+
+sketchybar --add item caffeinate right \
+  --set caffeinate \
+    icon='' \
+    update_freq=$UPDATE_FREQ_MED \
+    script="bash $PLUGIN_DIR/caffeinate.sh" \
+    click_script="bash $PLUGIN_DIR/caffeinate.sh toggle" \
+    icon.color=$(c "$GREEN")
+
+sketchybar --add item battery right \
+  --set battery \
+    icon.font="${MAC_SF_SYMBOLS:-$FONT:Bold:$FONT_SIZE_LARGE}" \
+    icon.padding_right=$PADDING_ICON_RIGHT \
+    icon.color=$(c "$GREEN") \
+    label.color=$(c "$TEXT") \
+    update_freq=$UPDATE_FREQ_MINUTE \
+    script="bash $PLUGIN_DIR/battery.sh"
+
+sketchybar --add item ram right \
+  --set ram \
+    icon.padding_right=$PADDING_ICON_RIGHT \
+    icon.color=$(c "$SKY") \
+    update_freq=$UPDATE_FREQ_MED \
+    script="bash $PLUGIN_DIR/ram.sh" \
+    label.color=$(c "$TEXT")
+
 sketchybar --add item clock right \
   --set clock \
-    update_freq=10 \
+    update_freq=$UPDATE_FREQ_SLOW \
     icon=󰃰 \
-    icon.padding_right=4 \
-    icon.color=$(c "$LAVENDER") \
+    icon.padding_right=$PADDING_ICON_RIGHT \
+    icon.color=$(c "$MAUVE") \
     label.color=$(c "$TEXT") \
     script="sketchybar --set \$NAME label=\"\$(date '+%a %d %B  %H:%M')\""
 
