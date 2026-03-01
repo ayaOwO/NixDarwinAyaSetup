@@ -1,3 +1,6 @@
 # Sketchybar secrets (ICAL URL, etc.)
-.env.*
-.env
+sketchybar/.env.*
+sketchybar/.env
+
+# Sketchybar scripts venv
+sketchybar/scripts/.venv

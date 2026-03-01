@@ -9,3 +9,5 @@ AEROSPACE=aerospace
 MEETINGS_ICAL_URL="${MEETINGS_ICAL_URL:-}"
 
 THEME="catppuccin-latte"
+
+FONT="Maple Mono NF"
