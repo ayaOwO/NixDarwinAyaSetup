@@ -14,4 +14,4 @@ FONT="Maple Mono NF"
 # SF Symbols / battery (use for battery item when using pasted SF Symbol glyphs)
 MAC_SF_SYMBOLS="SF Pro:Regular:13.0"
 # App icons (sketchybar-app-font); plugins use this for icon glyphs
-[ -f "$HOME/Library/Fonts/sketchybar-app-font.ttf" ] && SPACE_FONT="sketchybar-app-font" || SPACE_FONT="$FONT"
+[ -f "$HOME/Library/Fonts/sketchybar-app-font.ttf" ] && ICON_FONT="sketchybar-app-font" || ICON_FONT="$FONT"

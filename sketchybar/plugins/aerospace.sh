@@ -4,7 +4,7 @@
 # $NAME = SketchyBar item name (set by SketchyBar in environment)
 #
 # App icons: if sketchybar-app-font is installed (icon_map.sh present), its mapping
-# is used first. Set SPACE_FONT="sketchybar-app-font" in sketchybarrc so ligatures render.
+# is used first. Set ICON_FONT="sketchybar-app-font" in env so ligatures render.
 # See: https://github.com/kvndrsslr/sketchybar-app-font
 
 THEME_DIR="$HOME/.config/sketchybar/themes"
@@ -28,7 +28,7 @@ app_icon() {
   fi
 }
 
-# Build icon string (app icons only, uses SPACE_FONT) and label (workspace name only, uses FONT)
+# Build icon string (app icons only, uses ICON_FONT) and label (workspace name only, uses FONT)
 ICONS=""
 WINDOW_APPS="$($AEROSPACE list-windows --workspace "$WORKSPACE" 2>/dev/null | awk -F '|' '{print $2}' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
 
@@ -44,7 +44,7 @@ EOF
   ICONS="${ICONS# }"
 fi
 
-# Two items: name (FONT) with pill, icons (SPACE_FONT) with no background
+# Two items: name (FONT) with pill, icons (ICON_FONT) with no background
 ICONS_ITEM="${NAME}.icons"
 if [ "$WORKSPACE" = "$FOCUSED" ]; then
   sketchybar --animate tanh 20 --set "$NAME" \
