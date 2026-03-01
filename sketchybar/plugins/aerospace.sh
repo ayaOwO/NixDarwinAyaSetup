@@ -12,11 +12,57 @@ WS="$1"
 # FOCUSED/PREV from exec-on-workspace-change (see https://nikitabobko.github.io/AeroSpace/guide#callbacks)
 FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '[:space:]')}"
 
+app_icon() {
+  case "$1" in
+    "Cursor"|"cursor")
+      printf ''
+      ;;
+    "Rider"|"JetBrains Rider")
+      printf ''
+      ;;
+    "Code"|"Visual Studio Code"|"VSCodium")
+      printf ''
+      ;;
+    "Mail"|"Microsoft Outlook")
+      printf ''
+      ;;
+    "Safari"|"Google Chrome"|"Arc"|"Brave Browser"|"Firefox")
+      printf ''
+      ;;
+    "Calendar"|"Notion Calendar")
+      printf ''
+      ;;
+    "Obsidian"|"Notion")
+      printf ''
+      ;;
+    *)
+      printf ''
+      ;;
+  esac
+}
+
+# Build label: workspace name plus app icons for windows on that workspace
+LABEL="$WS"
+WINDOW_APPS="$($AEROSPACE list-windows --workspace "$WS" 2>/dev/null | awk -F '|' '{print $2}' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+
+if [ -n "$WINDOW_APPS" ]; then
+  # Deduplicate app names to avoid spammy icons
+  while IFS= read -r app; do
+    [ -z "$app" ] && continue
+    icon="$(app_icon "$app")"
+    [ -z "$icon" ] && continue
+    LABEL="$LABEL $icon"
+  done <<EOF
+$(printf '%s\n' "$WINDOW_APPS" | sort -u)
+EOF
+fi
+
 if [ "$WS" = "$FOCUSED" ]; then
   # Focused: blue pill, dark label
   sketchybar --animate tanh 20 --set "$NAME" \
     background.drawing=on \
     background.color=$(c "$BLUE") \
+    label="$LABEL" \
     label.color=$(c "$BASE")
 else
   WIN_COUNT=$($AEROSPACE list-windows --workspace "$WS" 2>/dev/null | wc -l | tr -d ' ')
@@ -25,11 +71,13 @@ else
     sketchybar --animate tanh 20 --set "$NAME" \
       background.drawing=on \
       background.color=$(c "$GREEN") \
+      label="$LABEL" \
       label.color=$(c "$BASE")
   else
     # Empty: no pill, subtle label (Overlay 1 = Subtle per style guide)
     sketchybar --animate tanh 20 --set "$NAME" \
       background.drawing=off \
+      label="$LABEL" \
       label.color=$(c "$OVERLAY1")
   fi
 fi

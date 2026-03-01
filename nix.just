@@ -19,3 +19,7 @@ clean:
 upgrade:
     @bash install.sh
     @bash upgrade.sh
+
+# Reload SketchyBar after config change (uses running instance)
+sketchybar:
+    sketchybar --reload

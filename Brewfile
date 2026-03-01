@@ -8,6 +8,7 @@ brew "neovim"
 brew "node"
 brew "python"
 brew "mas"
+brew "nowplaying-cli"
 brew "uv"
 brew "FelixKratz/formulae/sketchybar"
 
