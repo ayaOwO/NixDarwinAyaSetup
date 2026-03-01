@@ -63,7 +63,7 @@ sketchybar --add item clock right \
     icon.padding_right=4 \
     icon.color=$(c "$LAVENDER") \
     label.color=$(c "$TEXT") \
-    script="sketchybar --set \$NAME label=\"\$(date '+%a %d %b  %H:%M')\""
+    script="sketchybar --set \$NAME label=\"\$(date '+%a %d %B  %H:%M')\""
 
 ##### Initialize #####
 sketchybar --update
