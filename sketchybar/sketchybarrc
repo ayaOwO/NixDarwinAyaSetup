@@ -27,6 +27,9 @@ SPACE_LABEL_PADDING_RIGHT=4
 SPACE_ICONS_PADDING_LEFT=2
 SPACE_ICONS_PADDING_RIGHT=8
 POPUP_HEIGHT=22
+# Workspace: label (workspace name) vs icons (app icons) use different fonts
+SPACE_LABEL_FONT="$FONT:Regular:$FONT_SIZE"
+SPACE_ICON_FONT="$SPACE_FONT:Regular:$FONT_SIZE"
 UPDATE_FREQ_FAST=2
 UPDATE_FREQ_MED=5
 UPDATE_FREQ_SLOW=10
@@ -61,12 +64,12 @@ sketchybar --add event aerospace_workspace_change
 
 for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
   sid=$(echo "$ws" | tr '#+' '__')
-  # Workspace plugin: name (Nerd Font) then icons (App Font); one pill behind name only
+  # Workspace plugin: label (workspace name) and icons (app icons) use different fonts
   sketchybar \
     --add item "space.$sid" left \
     --subscribe "space.$sid" aerospace_workspace_change \
     --set "space.$sid" \
-      label.font="$FONT:Regular:$FONT_SIZE" \
+      label.font="$SPACE_LABEL_FONT" \
       icon= \
       label="$ws" \
       label.padding_right=$SPACE_LABEL_PADDING_RIGHT \
@@ -82,7 +85,7 @@ for ws in $($AEROSPACE list-workspaces --all 2>/dev/null); do
   sketchybar \
     --add item "space.${sid}.icons" left \
     --set "space.${sid}.icons" \
-      icon.font="$SPACE_FONT:Regular:$FONT_SIZE" \
+      icon.font="$SPACE_ICON_FONT" \
       icon= \
       label= \
       padding_left=$SPACE_ICONS_PADDING_LEFT \
