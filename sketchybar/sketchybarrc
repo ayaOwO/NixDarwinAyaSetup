@@ -3,7 +3,7 @@
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 THEME_DIR="$HOME/.config/sketchybar/themes"
 
-##### Load theme (set THEME in themes/env.sh: catppuccin-latte | catppuccin-mocha | catppuccin-macchiato | catppuccin-frappe) #####
+##### Load theme (DARK_THEME / LIGHT_THEME in themes/env.sh; THEME set from system appearance) #####
 source "$THEME_DIR/env.sh"
 source "$THEME_DIR/${THEME}.sh"
 source "$THEME_DIR/helpers.sh"
@@ -57,6 +57,12 @@ sketchybar --default \
   label.color=$(c "$TEXT") \
   padding_left=$PADDING_DEFAULT \
   padding_right=$PADDING_DEFAULT
+
+##### Theme: switch on system dark/light mode change (no restart; update colors in place) #####
+sketchybar --add event theme_change "AppleInterfaceThemeChangedNotification"
+sketchybar --add item theme_watcher left
+sketchybar --set theme_watcher drawing=off script="bash $PLUGIN_DIR/theme_change.sh"
+sketchybar --subscribe theme_watcher theme_change
 
 ##### Left: AeroSpace Workspaces (see AeroSpace goodies: show workspaces in Sketchybar) #####
 sketchybar --add event aerospace_workspace_change

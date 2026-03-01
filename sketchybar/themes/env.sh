@@ -8,7 +8,14 @@ CONFIG_DIR="$(dirname "${THEME_DIR:-$HOME/.config/sketchybar/themes}")"
 AEROSPACE=aerospace
 MEETINGS_ICAL_URL="${MEETINGS_ICAL_URL:-}"
 
-THEME="catppuccin-latte"
+# Theme by system appearance (set THEME from these when env.sh is sourced)
+DARK_THEME="catppuccin-macchiato"
+LIGHT_THEME="catppuccin-latte"
+if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then
+  THEME="$DARK_THEME"
+else
+  THEME="$LIGHT_THEME"
+fi
 
 FONT="Maple Mono NF"
 # SF Symbols / battery (use for battery item when using pasted SF Symbol glyphs)
