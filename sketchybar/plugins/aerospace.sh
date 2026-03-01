@@ -13,7 +13,10 @@ done
 
 WORKSPACE="$1"
 FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '[:space:]')}"
-WIN_COUNT=$($AEROSPACE list-windows --workspace "$WORKSPACE" 2>/dev/null | wc -l | tr -d ' ')
+
+# Single list-windows call: use for both window count and app icons (avoids 2nd aerospace subprocess)
+WINDOWS="$($AEROSPACE list-windows --workspace "$WORKSPACE" 2>/dev/null)"
+WIN_COUNT=$(echo "$WINDOWS" | grep -c . || true)
 
 app_icon() {
   if declare -f __icon_map &>/dev/null; then
@@ -28,7 +31,7 @@ while IFS= read -r app; do
   icon="$(app_icon "$app")"
   [ -z "$icon" ] && continue
   ICONS="$ICONS $icon"
-done < <($AEROSPACE list-windows --workspace "$WORKSPACE" 2>/dev/null | awk -F '|' '{print $2}' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sort -u)
+done < <(echo "$WINDOWS" | awk -F '|' '{print $2}' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sort -u)
 ICONS="${ICONS# }"
 
 if [ "$WORKSPACE" = "$FOCUSED" ]; then
