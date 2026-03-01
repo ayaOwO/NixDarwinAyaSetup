@@ -4,7 +4,11 @@
 <dict>
     <key>Label</key><string>com.felixkratz.sketchybar</string>
     <key>ProgramArguments</key>
-    <array><string>/opt/homebrew/bin/sketchybar</string></array>
+    <array>
+        <string>/opt/homebrew/bin/sketchybar</string>
+        <string>--hotload</string>
+        <string>true</string>
+    </array>
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
