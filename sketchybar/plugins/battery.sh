@@ -9,12 +9,11 @@ BATT_25="􀛩"
 BATT_0="􀛪"
 BATT_CHARGING="􀢋"
 
-THEME_DIR="${THEME_DIR:-$HOME/.config/sketchybar/themes}"
-[ -r "$THEME_DIR/env.sh" ] && source "$THEME_DIR/env.sh"
+source "$HOME/.config/sketchybar/themes/env.sh"
 [ -r "$THEME_DIR/${THEME}.sh" ] && source "$THEME_DIR/${THEME}.sh"
 [ -r "$THEME_DIR/helpers.sh" ] && source "$THEME_DIR/helpers.sh"
 
-ORANGE="${ORANGE:-$PEACH}"
+ORANGE="$PEACH"
 
 BATT_PERCENT=$(pmset -g batt 2>/dev/null | grep -Eo "[0-9]+%" | head -1 | cut -d% -f1)
 BATT_PERCENT="${BATT_PERCENT:-0}"
@@ -46,7 +45,7 @@ else
     fi
     # Low Power Mode: use a distinct color (not used in battery gradient)
     if [[ "$LOW_POWER" == *"1"* ]]; then
-        COLOR="${SKY:-$BLUE}"
+        COLOR="$SKY"
     fi
 fi
 

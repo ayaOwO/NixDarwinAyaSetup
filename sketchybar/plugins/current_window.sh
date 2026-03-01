@@ -1,9 +1,7 @@
 #!/bin/bash
 # Updates the "current_window" sketchybar item with the focused window title.
 
-THEME_DIR="${THEME_DIR:-$HOME/.config/sketchybar/themes}"
-[ -r "$THEME_DIR/env.sh" ] && source "$THEME_DIR/env.sh"
-AEROSPACE="${AEROSPACE:-aerospace}"
+source "$HOME/.config/sketchybar/themes/env.sh"
 if ! command -v "$AEROSPACE" &>/dev/null; then
   for p in /opt/homebrew/bin /usr/local/bin; do
     [ -x "$p/aerospace" ] && AEROSPACE="$p/aerospace" && break

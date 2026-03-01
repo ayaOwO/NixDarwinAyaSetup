@@ -3,12 +3,10 @@
 # Args: $1 = workspace name. $NAME = SketchyBar item (set by SketchyBar).
 # Icons: icon_map.sh / sketchybar-app-font when present. See themes/env.sh.
 
-THEME_DIR="${THEME_DIR:-$HOME/.config/sketchybar/themes}"
-source "$THEME_DIR/env.sh"
+source "$HOME/.config/sketchybar/themes/env.sh"
 source "$THEME_DIR/${THEME}.sh"
 source "$THEME_DIR/helpers.sh"
 
-CONFIG_DIR="$(dirname "$THEME_DIR")"
 for f in "$CONFIG_DIR/icon_map.sh" "$CONFIG_DIR/helpers/icon_map.sh"; do
   [ -r "$f" ] && source "$f" && break
 done
@@ -52,7 +50,7 @@ display_label="$WORKSPACE"
 [[ "$WORKSPACE" =~ ^[0-9]+-(.+)$ ]] && display_label="${BASH_REMATCH[1]}"
 
 sketchybar --animate tanh 20 --set "$NAME" \
-  padding_left=8 \
+  icon.padding_left=$SPACE_ICON_PADDING_LEFT \
   background.drawing=$drawing \
   background.color=$(c "$bg_color") \
   icon="$ICONS" \

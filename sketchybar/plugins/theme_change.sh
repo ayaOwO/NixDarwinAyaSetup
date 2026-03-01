@@ -3,8 +3,7 @@
 # and update bar + defaults in place; then refresh all items so plugins use new colors.
 # See: https://github.com/FelixKratz/SketchyBar/discussions/159
 
-THEME_DIR="${CONFIG_DIR:-$HOME/.config/sketchybar}/themes"
-source "$THEME_DIR/env.sh"
+source "$HOME/.config/sketchybar/themes/env.sh"
 source "$THEME_DIR/${THEME}.sh"
 source "$THEME_DIR/helpers.sh"
 

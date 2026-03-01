@@ -1,8 +1,7 @@
 #!/bin/bash
 # caffeinate.sh — show coffee icon when caffeinate is active; click to toggle (macOS)
 
-THEME_DIR="${THEME_DIR:-$HOME/.config/sketchybar/themes}"
-[ -r "$THEME_DIR/env.sh" ] && source "$THEME_DIR/env.sh"
+source "$HOME/.config/sketchybar/themes/env.sh"
 [ -r "$THEME_DIR/${THEME}.sh" ] && source "$THEME_DIR/${THEME}.sh"
 [ -r "$THEME_DIR/helpers.sh" ] && source "$THEME_DIR/helpers.sh"
 
@@ -18,7 +17,7 @@ if [ "${1:-}" = "toggle" ]; then
 fi
 
 if pgrep -x caffeinate >/dev/null; then
-  sketchybar --set "$NAME" icon="$COFFEE" icon.color=$(c "${PEACH:-#fe640b}") label=""
+  sketchybar --set "$NAME" icon="$COFFEE" icon.color=$(c "$PEACH") label=""
 else
-  sketchybar --set "$NAME" icon="$COFFEE" icon.color=$(c "${OVERLAY1:-#8c8fa1}") label=""
+  sketchybar --set "$NAME" icon="$COFFEE" icon.color=$(c "$OVERLAY1") label=""
 fi
