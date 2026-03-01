@@ -26,7 +26,7 @@ app_icon() {
     "Mail"|"Microsoft Outlook")
       printf ''
       ;;
-    "Safari"|"Google Chrome"|"Arc"|"Brave Browser"|"Firefox")
+    "Safari"|"Google Chrome")
       printf ''
       ;;
     "Calendar"|"Notion Calendar")
