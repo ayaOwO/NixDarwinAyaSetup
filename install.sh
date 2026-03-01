@@ -30,11 +30,13 @@ fi
 echo "Linking configs (using sudo)..."
 USER_HOME="$HOME"
 mkdir -p "$USER_HOME/.config/aerospace"
-mkdir -p "$USER_HOME/.config/sketchybar/plugins"
 sudo ln -sfn "$REPO_ROOT/aerospace.toml" "$USER_HOME/.config/aerospace/aerospace.toml"
-sudo ln -sfn "$REPO_ROOT/sketchybar/sketchybarrc" "$USER_HOME/.config/sketchybar/sketchybarrc"
-sudo ln -sfn "$REPO_ROOT/sketchybar/plugins" "$USER_HOME/.config/sketchybar/plugins"
-sudo ln -sfn "$REPO_ROOT/sketchybar/themes" "$USER_HOME/.config/sketchybar/themes"
+mkdir -p "$USER_HOME/.config"
+# If sketchybar is a directory, remove it so we can symlink the whole folder from the repo
+if [ -d "$USER_HOME/.config/sketchybar" ] && [ ! -L "$USER_HOME/.config/sketchybar" ]; then
+  sudo rm -rf "$USER_HOME/.config/sketchybar"
+fi
+sudo ln -sfn "$REPO_ROOT/sketchybar" "$USER_HOME/.config/sketchybar"
 
 echo "Reloading AeroSpace config..."
 if command -v aerospace &>/dev/null; then
