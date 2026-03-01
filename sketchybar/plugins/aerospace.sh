@@ -7,10 +7,10 @@
 # is used first. Set ICON_FONT="sketchybar-app-font" in env so ligatures render.
 # See: https://github.com/kvndrsslr/sketchybar-app-font
 
-THEME_DIR="$HOME/.config/sketchybar/themes"
-source "$THEME_DIR/catppuccin-latte.sh"
-source "$THEME_DIR/helpers.sh"
+THEME_DIR="${THEME_DIR:-$HOME/.config/sketchybar/themes}"
 source "$THEME_DIR/env.sh"
+source "$THEME_DIR/${THEME}.sh"
+source "$THEME_DIR/helpers.sh"
 
 CONFIG_DIR="$(dirname "$THEME_DIR")"
 for ICON_MAP_SH in "$CONFIG_DIR/icon_map.sh" "$CONFIG_DIR/helpers/icon_map.sh"; do

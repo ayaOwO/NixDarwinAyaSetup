@@ -2,7 +2,8 @@
 # caffeinate.sh — show coffee icon when caffeinate is active; click to toggle (macOS)
 
 THEME_DIR="${THEME_DIR:-$HOME/.config/sketchybar/themes}"
-[ -r "$THEME_DIR/catppuccin-latte.sh" ] && source "$THEME_DIR/catppuccin-latte.sh"
+[ -r "$THEME_DIR/env.sh" ] && source "$THEME_DIR/env.sh"
+[ -r "$THEME_DIR/${THEME}.sh" ] && source "$THEME_DIR/${THEME}.sh"
 [ -r "$THEME_DIR/helpers.sh" ] && source "$THEME_DIR/helpers.sh"
 
 COFFEE=''   # Nerd Font coffee icon

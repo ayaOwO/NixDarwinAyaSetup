@@ -3,11 +3,10 @@
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 THEME_DIR="$HOME/.config/sketchybar/themes"
 
-##### Load Catppuccin theme (change filename to switch flavour) #####
-# Available: catppuccin-mocha.sh | catppuccin-macchiato.sh | catppuccin-frappe.sh | catppuccin-latte.sh
-source "$THEME_DIR/catppuccin-latte.sh"
-source "$THEME_DIR/helpers.sh"
+##### Load theme (set THEME in themes/env.sh: catppuccin-latte | catppuccin-mocha | catppuccin-macchiato | catppuccin-frappe) #####
 source "$THEME_DIR/env.sh"
+source "$THEME_DIR/${THEME}.sh"
+source "$THEME_DIR/helpers.sh"
 
 ##### Layout constants #####
 BAR_HEIGHT=38
