@@ -142,13 +142,6 @@ sketchybar --add item current_window right \
     update_freq=$UPDATE_FREQ_FAST \
     script="bash $PLUGIN_DIR/current_window.sh"
 
-sketchybar --add item network right \
-  --set network \
-    icon='' \
-    update_freq=$UPDATE_FREQ_MED \
-    script="bash $PLUGIN_DIR/network.sh" \
-    icon.color=$(c "$YELLOW")
-
 sketchybar --add item caffeinate right \
   --set caffeinate \
     icon='' \
