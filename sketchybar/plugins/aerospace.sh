@@ -2,17 +2,30 @@
 # Called when aerospace_workspace_change event fires.
 # $1 = workspace name for this item
 # $NAME = SketchyBar item name (set by SketchyBar in environment)
+#
+# App icons: if sketchybar-app-font is installed (icon_map.sh present), its mapping
+# is used first. Set SPACE_FONT="sketchybar-app-font" in sketchybarrc so ligatures render.
+# See: https://github.com/kvndrsslr/sketchybar-app-font
 
 THEME_DIR="$HOME/.config/sketchybar/themes"
 source "$THEME_DIR/catppuccin-latte.sh"
 source "$THEME_DIR/helpers.sh"
 source "$THEME_DIR/env.sh"
 
+CONFIG_DIR="$(dirname "$THEME_DIR")"
+for ICON_MAP_SH in "$CONFIG_DIR/icon_map.sh" "$CONFIG_DIR/helpers/icon_map.sh"; do
+  [ -r "$ICON_MAP_SH" ] && source "$ICON_MAP_SH" && break
+done
+
 WS="$1"
 # FOCUSED/PREV from exec-on-workspace-change (see https://nikitabobko.github.io/AeroSpace/guide#callbacks)
 FOCUSED="${FOCUSED:-$($AEROSPACE list-workspaces --focused 2>/dev/null | tr -d '[:space:]')}"
 
 app_icon() {
+  if declare -f __icon_map &>/dev/null; then
+    __icon_map "$1"
+    [ -n "${icon_result:-}" ] && printf '%s' "$icon_result" && return
+  fi
   case "$1" in
     "Cursor"|"cursor"|"Rider"|"JetBrains Rider"|"Code"|"Visual Studio Code"|"VSCodium")
       printf ''
